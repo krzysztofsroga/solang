@@ -1,0 +1,2 @@
+class BuildScript(soUrl: String) {
+}
