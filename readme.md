@@ -9,6 +9,7 @@ SoLang is the programming language of the future. Why so?
  - You can write code which iterates over all solutions - find yourself the best one without copying and pasting code on and on again
  - Love writing viruses? Well, now you can write one which no antivirus software will detect. Nobody expect downloading malicious code from Stact Overflow.
  - You can fully control compilation process with all features of kotlin programming language
+ - Parallel code fetching and compilation (so that it doesn't take ages)
  
 ### Important notes
  - Without Stack Exchange API key you can download only 300 snippets every day. Snippets are downloaded every time you run your code. To compile more code get your key on on [Stack Apps](http://stackapps.com/apps/oauth/register)
