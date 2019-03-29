@@ -28,6 +28,7 @@ SoLang is the programming language of the future. Why so?
  - support windows target
  - downloading code from other Stack Exchange pages
  - downloading code from GitHub
+ - support for plugins (other code sources)
 
 
 To fulfill DRY principle, you can't make a copy of a snippet - every time you execute a method on it, the original snippet is modified.

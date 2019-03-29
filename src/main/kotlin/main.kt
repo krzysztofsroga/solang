@@ -1,11 +1,6 @@
-fun main() {
-    val filename = "script.py"
-    val buildScript = "python2 $filename"
-    val code = createCode {
-        +StackOverflowSnippet(40427469, 6)
-    }
-    SoCompiler(code, buildScript).compile(filename)
-}
+fun main() = createCode {
+    +StackOverflowSnippet(40427469, 6)
+}.buildWith("python2", "script.py")
 
 
 //val code = """for count in range(1, 101):
