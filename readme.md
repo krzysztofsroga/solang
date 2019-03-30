@@ -1,7 +1,9 @@
 Stack Overflow Programming Language
 ---
+<img src=Logo.png width=200 height=200/>
 
-SoLang is the programming language of the future. Why so?
+### SoLang? So what?
+SoLang is the programming language of the future.
  - It's built around Stack Overflow Driven Development process and brings it to the next level
  - You don't ever need to write code which has been already written - just reference it!
  - Your code is always up to date - when someone updates their answer on Stack Overflow, your code is automatically updated as well!
