@@ -83,9 +83,10 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - [x] Design Logo
  - [ ] Write tests
  - [x] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
- - [ ] Allow usage of specific answer version
+ - [x] Allow usage of specific answer version
  - [ ] Api key usage
  - [ ] Fix `toLine` after `fromLine` usage
+ 
 ### Read
  - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
 

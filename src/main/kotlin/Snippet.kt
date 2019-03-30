@@ -42,14 +42,14 @@ class SimpleSnippet(private val code: String) : Snippet() {
     }
 }
 
-class StackOverflowSnippet(private val answerNumber: Int, codeBlockNumber: Int) : Snippet() {
+class StackOverflowSnippet(private val answerNumber: Int, codeBlockNumber: Int, private val revisionNumber: Int? = null) : Snippet() {
     private val codeBlockNumber = codeBlockNumber - SoLangConfiguration.codeBlockIndices.value
     override suspend fun getCode(): String {
-        val answerBody = StackOverflowConnection.getAnswerBody(answerNumber)
+        val answerBody: String = if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber) else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber) //TODO throw NoSuchAnswerRevision exception
         val codeRegex = Regex(
             "<pre><code>((.|\\n)*?)</code></pre>",
             setOf(RegexOption.CANON_EQ)
         ) //TODO check if it doesn't need to be <pre><code>
-        return codeRegex.findAll(answerBody).take(codeBlockNumber+1).toList()[codeBlockNumber].destructured.component1() //Using take because finding later blocks is not necessary
+        return codeRegex.findAll(answerBody).getElement(codeBlockNumber).destructured.component1() //Using take because finding later blocks is not necessary
     }
 }

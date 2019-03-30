@@ -19,6 +19,8 @@ object StackOverflowConnection {
 
     internal val getAnswerBody = ::downloadAnswerBody.memSuspend()
 
+    internal val getAnswerAllRevisionBodies = ::downloadAnswerAllRevisionBodies.memSuspend()
+
     private suspend fun downloadAnswerBody(answerNumber: Int): String {
         val request = Fuel.get(
             answerNumber.toString(), listOf(
@@ -27,14 +29,29 @@ object StackOverflowConnection {
             )
         )
         val responseString = request.awaitString()
-//  val obj = Json.nonstrict.parse<MyModel>(responseString) TODO change to this when no longer experimental
-        val obj = Json.nonstrict.parse(MyModel.serializer(), responseString)
+//  val obj = Json.nonstrict.parse<ResponseModel<AnswerModel>(responseString) TODO change to this when no longer experimental
+        val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
         return obj.items.first().body
     }
 
-    @Serializable
-    private data class MyModel(val items: List<MyModel2>)
+    private suspend fun downloadAnswerAllRevisionBodies(answerNumber: Int): Map<Int, String> {
+        val request = Fuel.get(
+            "$answerNumber/revisions", listOf(
+                "site" to "stackoverflow",
+                "filter" to "withbody"
+            )
+        )
+        val responseString = request.awaitString()
+        val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerRevisionModel.serializer()), responseString)
+        return mapOf(*obj.items.map { it.revision_number to it.body }.toTypedArray())
+    }
 
     @Serializable
-    private data class MyModel2(val body: String)
+    private data class ResponseModel<T>(val items: List<T>)
+
+    @Serializable
+    private data class AnswerModel(val body: String)
+
+    @Serializable
+    private data class AnswerRevisionModel(val body: String, val revision_number: Int)
 }

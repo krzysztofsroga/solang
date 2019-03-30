@@ -5,6 +5,12 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
+@Experimental
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+annotation class ExperimentalSnippet
+
+
 fun String.buildWith(buildScript: String, targetFile: String) {
     val command = "$buildScript $targetFile"
 
@@ -51,3 +57,5 @@ internal fun <A, R> (suspend (A) -> R).memSuspend(): suspend (A) -> R {
         }.await()
     }
 }
+
+internal fun<T> Sequence<T>.getElement(n: Int): T = take(n+1).last() //more efficient than toList()[n] because it skips all further elements
