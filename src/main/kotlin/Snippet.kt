@@ -42,7 +42,8 @@ class SimpleSnippet(private val code: String) : Snippet() {
     }
 }
 
-class StackOverflowSnippet(private val answerNumber: Int, private val codeBlockNumber: Int) : Snippet() {
+class StackOverflowSnippet(private val answerNumber: Int, codeBlockNumber: Int) : Snippet() {
+    private val codeBlockNumber = codeBlockNumber - SoLangConfiguration.codeBlockIndices.value
     override suspend fun getCode(): String {
         val answerBody = StackOverflowConnection.getAnswerBody(answerNumber)
         val codeRegex = Regex(

@@ -1,5 +1,5 @@
 fun main() = createCode {
-    +StackOverflowSnippet(40427469, 6) takeLines 2..4 change ("101" to "51")
+    +StackOverflowSnippet(40427469, 7) takeLines 2..4 change ("101" to "51")
 }.let { print(it) }//.buildWith("python2", "script.py")
 
 

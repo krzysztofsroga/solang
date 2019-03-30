@@ -18,13 +18,13 @@ So Lang? So what?
 ##### FizzBuzz
 ```kotlin
 fun main() = createCode {
-    +StackOverflowSnippet(40427469, 6)
+    +StackOverflowSnippet(40427469, 7)
 }.buildWith("python2", "script.py")
 ```
 ##### FizzBuzz but up to 50 and completely skips not matching numbers
 ```kotlin
 fun main() = createCode {
-    +StackOverflowSnippet(40427469, 6) toLine 7 change ("101" to "51")
+    +StackOverflowSnippet(40427469, 7) toLine 7 change ("101" to "51")
 }.buildWith("python2", "script.py")
 ```
 
@@ -68,7 +68,7 @@ dependencies {
  - [ ] Upload to [Jitpack](https://jitpack.io/)
  - [x] Memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
  - [ ] Cleanup dependencies
- - [ ] Add option to start code block numbering from 1
+ - [x] Add option to start code block numbering from 1
  - [ ] Real time code output and interaction (for some reason `inheritIO` does not work)
  - [x] Design Logo
  - [ ] Write tests
