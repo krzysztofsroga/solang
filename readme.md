@@ -12,7 +12,14 @@ So Lang? So what?
  - You can fully control compilation process with all features of kotlin programming language
  - Parallel code fetching and compilation (so that it doesn't take ages)
  - It's great for DRM - your code can't be run without internet access
- 
+
+### Example code
+##### FizzBuzz
+```kotlin
+fun main() = createCode {
+    +StackOverflowSnippet(40427469, 6)
+}.buildWith("python2", "script.py")
+```
 ### Important notes
  - Without Stack Exchange API key you can download only 300 snippets every day. Snippets are downloaded every time you run your code. To compile more code get your key on on [Stack Apps](http://stackapps.com/apps/oauth/register)
  - To fulfill DRY principle, you can't make a copy of a snippet - every time you execute a method on it, the original snippet is modified.
@@ -24,12 +31,13 @@ So Lang? So what?
  - [ ] Cleanup dependencies
  - [ ] Add option to start code block numbering from 1
  - [ ] Real time code output and interaction (for some reason `inheritIO` doesn't work)
- - [ ] Design Logo
+ - [x] Design Logo
  - [ ] Write tests
  - [ ] infix fun parametrize / parametrized with, sth like this
  - [ ] safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
  - [ ] forLoop returning snippet and not extending CodeBuilder but creating its own. It should be subclass of Snippet.
  - [ ] Allow for using specific version of the answer
+ - [ ] Api key usage
 ### Read
  - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
 
