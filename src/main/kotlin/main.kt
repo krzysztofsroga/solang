@@ -1,7 +1,8 @@
 fun main() = createCode {
+    SoLangConfiguration.apiToken = ""
     SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
 //    +StackOverflowSnippet(40427469, 7, 1)
-//    +SimpleSnippet("First revision:")
+    +SimpleSnippet("First revision:")
     +StackOverflowSnippet(4362605, 2, 1)
     +SimpleSnippet("Second revision:")
     +StackOverflowSnippet(4362605, 2, 2)

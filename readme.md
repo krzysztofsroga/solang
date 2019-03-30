@@ -84,7 +84,7 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - [ ] Write tests
  - [x] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
  - [x] Allow usage of specific answer version
- - [ ] Api key usage
+ - [x] Api key usage
  - [ ] Fix `toLine` after `fromLine` usage
  
 ### Read
