@@ -15,13 +15,14 @@ buildscript {
 
 plugins {
     kotlin("jvm") version "1.3.21"
-//    kotlin( "kotlinx-serialization") version "1.3.11"
 }
+
 apply {
     plugin("kotlinx-serialization")
 }
-group = "com.krzysztofsroga.solang"
-version = "1.0-SNAPSHOT"
+
+group = "com.krzysztofsroga"
+version = "0.1-alpha"
 
 repositories {
     mavenCentral()
@@ -34,8 +35,6 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.github.kittinunf.fuel:fuel:2.0.1")
-    implementation("com.github.kittinunf.fuel:fuel-json:2.0.1")
-    implementation("com.github.kittinunf.fuel:fuel-gson:2.0.1")
     implementation("com.github.kittinunf.fuel:fuel-coroutines:2.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0")
 }

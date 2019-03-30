@@ -67,7 +67,7 @@ dependencies {
 ### Release ready TODO
  - [ ] Upload to [Jitpack](https://jitpack.io/)
  - [x] Memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
- - [ ] Cleanup dependencies
+ - [x] Cleanup dependencies
  - [x] Add option to start code block numbering from 1
  - [ ] Real time code output and interaction (for some reason `inheritIO` does not work)
  - [x] Design Logo
