@@ -20,6 +20,11 @@ SoLang is the programming language of the future. Why so?
  - Cleanup dependencies
  - Add option to start code block numbering from 1
  - Real time code output and interaction (for some reason `inheritIO` doesn't work)
+ - Design Logo
+ - Write tests
+ - infix fun parametrize / parametrized with, sth like this
+ - safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
+ - forLoop returning snippet and not extending CodeBuilder but creating its own. It should be subclass of Snippet.
  
 ### Future plans
  - answers buffering
