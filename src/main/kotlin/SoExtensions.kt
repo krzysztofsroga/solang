@@ -1,10 +1,39 @@
+import SoLangConfiguration.SoLangMode.*
+import SoLangConfiguration.soLangMode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
 fun String.buildWith(buildScript: String, targetFile: String) {
-    SoCompiler(this, "$buildScript $targetFile").compile(targetFile)
+    val command = "$buildScript $targetFile"
+
+    when (soLangMode) {
+        UNSAFE -> {
+            println("Code will be saved in file: $targetFile")
+            SoCompiler(this, command).compile(targetFile)
+        }
+        SAFE -> {
+            println("Code will be saved in file: $targetFile")
+            if (promptOk("code") && command.promptOk("bulid command")) {
+                SoCompiler(this, command).compile(targetFile)
+            } else {
+                println("Build canceled.")
+            }
+        }
+        PRINT -> {
+            println("Build command: $command")
+            println("Code:\n$this")
+        }
+    }
+}
+
+internal fun String.promptOk(what: String): Boolean {
+    println("This is $what:")
+    println(this)
+    print(":: Does $what look okay? [y/N] ")
+    val input = readLine()
+    return input != null && input.isNotEmpty() && input.first().toLowerCase() == 'y'
 }
 
 /**

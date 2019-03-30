@@ -55,8 +55,18 @@ dependencies {
 }
 ```
 
+### Configuration
+You can configure some basic features of SoLang compiler
+```kotlin
+// SAFE is default mode. You will be prompted if the code and build command are okay
+SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.SAFE
 
+// UNSAFE is dangerous. It executes the code without any prompt. 
+SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.UNSAFE
 
+// PRINT mode just shows you generated code and bulid command
+SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
+```
 
 
 ### Important notes
@@ -72,7 +82,7 @@ dependencies {
  - [ ] Real time code output and interaction (for some reason `inheritIO` does not work)
  - [x] Design Logo
  - [ ] Write tests
- - [ ] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
+ - [x] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
  - [ ] Allow usage of specific answer version
  - [ ] Api key usage
  - [ ] Fix `toLine` after `fromLine` usage

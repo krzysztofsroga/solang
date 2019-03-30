@@ -1,6 +1,6 @@
 fun main() = createCode {
-    +StackOverflowSnippet(40427469, 7) takeLines 2..4 change ("101" to "51")
-}.let { print(it) }//.buildWith("python2", "script.py")
+    +StackOverflowSnippet(40427469, 7) toLine 7 change ("101" to "51")
+}.buildWith("python2", "script.py")
 
 
 //val code = """for count in range(1, 101):
