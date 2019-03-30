@@ -15,15 +15,10 @@ class CodeBuilder {
         }.joinToString("\n") //TODO open issue in kotlin - map can't be merged with joinToString
     }
 
-    fun addSnippet(snippet: Snippet): Snippet {
-        snippets += snippet
-        return snippet
-    }
-
     operator fun Snippet.unaryPlus(): Snippet {
-        return addSnippet(this)
+        snippets += this
+        return this
     }
-
 }
 
-public fun createCode(block: CodeBuilder.() -> Unit): String = CodeBuilder().apply(block).build()
+fun createCode(block: CodeBuilder.() -> Unit): String = CodeBuilder().apply(block).build()

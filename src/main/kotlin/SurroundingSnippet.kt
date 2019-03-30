@@ -11,9 +11,9 @@ fun surroundingSnippet(beforeAfterConfig: SurroundingSnippetBuilder.() -> Unit):
     return { insideCode ->
         //apart from receiving insideCode this lambda also extends CodeBuilder
         val builder = SurroundingSnippetBuilder().apply(beforeAfterConfig)
-        addSnippet(builder.before) //TODO use urnary+
+        +builder.before
         insideCode()
-        addSnippet(builder.after)
+        +builder.after
     }
 }
 

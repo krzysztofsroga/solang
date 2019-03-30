@@ -30,8 +30,7 @@ object StackOverflowConnection {
     private suspend fun downloadAnswerBody(answerNumber: Int): String {
         val request = Fuel.get(answerNumber.toString(), parameters)
         val responseString = request.awaitString()
-//  val obj = Json.nonstrict.parse<ResponseModel<AnswerModel>(responseString) TODO change to this when no longer experimental
-        val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
+        val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString) // TODO when no longer experimental change it to Json.nonstrict.parse<ResponseModel<AnswerModel>>(responseString)
         return obj.items.first().body
     }
 

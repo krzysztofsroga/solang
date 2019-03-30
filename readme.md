@@ -68,13 +68,12 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.UNSAFE
 SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
 ```
 
-
 ### Important notes
  - Without Stack Exchange API key you can download only 300 snippets every day. Snippets are downloaded every time you run your code. To compile more code get your key on on [Stack Apps](http://stackapps.com/apps/oauth/register)
  - To fulfill DRY principle, making copies of snippets is a little bit harder - every time you execute a method like `toLine`, `change`, the original snippet is modified. If you need the code in more than one place, please write a function.
  - Please, always use safe mode and verify the code if you fetch 'newest' answer version. It's because stack overflow answers can be changed. You don't want to see your computer executing `rm -rf ~/`.
 
-### Release ready TODO
+### Release ready TODOs
  - [ ] Upload to [Jitpack](https://jitpack.io/)
  - [x] Memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
  - [x] Cleanup dependencies
@@ -86,6 +85,12 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - [x] Allow usage of specific answer version
  - [x] Api key usage
  - [ ] Fix `toLine` after `fromLine` usage
+ - [x] Fix all visibility modifiers
+
+### Less important TODOs
+ - BuildScript class, build script fetching
+ - Analyze possibility of returning subclass of `Snippet` from SurroundingSnippet - not extending CodeBuilder, but creating its own
+ - infix fun parametrize / parametrizedWith
  
 ### Read
  - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
