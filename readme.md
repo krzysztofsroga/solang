@@ -11,6 +11,7 @@ So Lang? So what?
  - Love writing viruses? Well, now you can write one which no antivirus software will detect. Nobody expect downloading malicious code from Stact Overflow.
  - You can fully control compilation process with all features of kotlin programming language
  - Parallel code fetching and compilation (so that it doesn't take ages)
+ - Answer caching - if you fetch different fragments of code from the same answer - don't worry, the data will be cached. Stack Exchange API will be called only once.
  - It's great for DRM - your code can't be run without internet access
 
 ### Example code
@@ -22,40 +23,30 @@ fun main() = createCode {
 ```
 ### Important notes
  - Without Stack Exchange API key you can download only 300 snippets every day. Snippets are downloaded every time you run your code. To compile more code get your key on on [Stack Apps](http://stackapps.com/apps/oauth/register)
- - To fulfill DRY principle, you can't make a copy of a snippet - every time you execute a method on it, the original snippet is modified.
- - If you wan't to use snippet in more than one place - create a function. The only snippets you can actually reuse are surrounding snippets (those are for fast creation of for example loops, functions)
+ - To fulfill DRY principle, making copies of snippets is a little bit harder - every time you execute a method like `toLine`, `change`, the original snippet is modified. If you need the code in more than one place, please write a function.
+ - Please, always use safe mode and verify the code if you fetch 'newest' answer version. It's because stack overflow answers can be changed. You don't want to see your computer executing `rm -rf ~/`.
 
 ### Release ready TODO
- - [ ] upload to [Jitpack](https://jitpack.io/)
- - [x] memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
+ - [ ] Upload to [Jitpack](https://jitpack.io/)
+ - [x] Memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
  - [ ] Cleanup dependencies
  - [ ] Add option to start code block numbering from 1
  - [ ] Real time code output and interaction (for some reason `inheritIO` doesn't work)
  - [x] Design Logo
  - [ ] Write tests
- - [ ] infix fun parametrize / parametrized with, sth like this
- - [ ] safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
- - [ ] forLoop returning snippet and not extending CodeBuilder but creating its own. It should be subclass of Snippet.
- - [ ] Allow for using specific version of the answer
+ - [ ] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
+ - [ ] Allow usage of specific answer version
  - [ ] Api key usage
 ### Read
  - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
 
 ### Future plans
- - answers buffering
- - allow self-referencing SoLang code on Stack Overflow
- - write plugins for most popular IDEs and editors - it should show you hints how do your snippets look like
- - support windows target
- - downloading code from other Stack Exchange pages
- - downloading code from GitHub
- - support for plugins (other code sources)
- - add-ons for chrome and firefox
-
-```kotlin
-createCode {
-    +StackOverflowSnippet(answerNumber = 1234, codeBlockNumber = 9) fromLine 30 toLine 35
-    +StackOverflowSnippet(answerNumber = 4251, codeBlockNumber = 7) toLine 3
-}
-```
+ - Allow self-referencing SoLang code on Stack Overflow. Sharing recursive snippet could be funny.
+ - Write plugins for most popular IDEs and editors - it should show you hints how do your snippets look like.
+ - Support Microsoft Windows target.
+ - Downloading code from other Stack Exchange pages.
+ - Downloading code from GitHub.
+ - Add support for plugins (other code sources).
+ - Create add-ons for chrome and firefox.
 
 ##### Disclaimer: This is NOT official language created by Stack Overflow. 
