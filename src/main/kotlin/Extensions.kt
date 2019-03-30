@@ -21,7 +21,7 @@ fun String.buildWith(buildScript: String, targetFile: String) {
         }
         SAFE -> {
             println("Code will be saved in file: $targetFile")
-            if (promptOk("code") && command.promptOk("bulid command")) {
+            if (promptOk("code") && command.promptOk("build command")) {
                 SoCompiler(this, command).compile(targetFile)
             } else {
                 println("Build canceled.")

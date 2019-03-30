@@ -1,7 +1,7 @@
 object SoLangConfiguration {
 
     var codeBlockIndices = Indices.START_FROM_1
-//    var lineIndicies = Indices.START_FROM_1 TODO implement
+//    var lineIndices = Indices.START_FROM_1 TODO implement
 
     var soLangMode = SoLangMode.SAFE
 
