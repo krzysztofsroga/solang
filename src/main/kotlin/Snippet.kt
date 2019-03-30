@@ -7,11 +7,16 @@ sealed class Snippet {
     }
 
     infix fun fromLine(x: Int) = applyStringModifier {
-        lines().drop(x).joinToString("\n")
+        lines().drop(x - 1).joinToString("\n")
     }
 
     infix fun toLine(x: Int) = applyStringModifier {
+        // TODO Doesn't work after fromLine - takes n lines instead of up to nth line of whole snippet"
         lineSequence().take(x).joinToString("\n")
+    }
+
+    infix fun takeLines(x: IntRange) = applyStringModifier {
+        lines().slice((x.first-1)..(x.last-1)).joinToString("\n")
     }
 
     infix fun change(x: Pair<String, String>): Snippet = applyStringModifier {
