@@ -28,16 +28,16 @@ repositories {
     maven(url = "https://jitpack.io") {
         name = "jitpack"
     }
-    maven( url ="https://kotlin.bintray.com/kotlinx" )
+    maven(url = "https://kotlin.bintray.com/kotlinx")
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation ("com.github.kittinunf.fuel:fuel:2.0.1")
-    implementation ("com.github.kittinunf.fuel:fuel-json:2.0.1")
-    implementation ("com.github.kittinunf.fuel:fuel-gson:2.0.1")
-    implementation ("com.github.kittinunf.fuel:fuel-coroutines:2.0.1")
-    implementation( "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0")
+    implementation("com.github.kittinunf.fuel:fuel:2.0.1")
+    implementation("com.github.kittinunf.fuel:fuel-json:2.0.1")
+    implementation("com.github.kittinunf.fuel:fuel-gson:2.0.1")
+    implementation("com.github.kittinunf.fuel:fuel-coroutines:2.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0")
 }
 
 tasks.withType<KotlinCompile> {

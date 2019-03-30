@@ -17,7 +17,9 @@ object StackOverflowConnection {
         FuelManager.instance.basePath = stackOverflowUrl
     }
 
-    suspend fun getAnswerBody(answerNumber: Int): String { //TODO memoize this function!
+    internal val getAnswerBody = ::downloadAnswerBody.memSuspend()
+
+    private suspend fun downloadAnswerBody(answerNumber: Int): String {
         val request = Fuel.get(
             answerNumber.toString(), listOf(
                 "site" to "stackoverflow",
@@ -25,7 +27,6 @@ object StackOverflowConnection {
             )
         )
         val responseString = request.awaitString()
-//        println(responseString)
 //  val obj = Json.nonstrict.parse<MyModel>(responseString) TODO change to this when no longer experimental
         val obj = Json.nonstrict.parse(MyModel.serializer(), responseString)
         return obj.items.first().body
