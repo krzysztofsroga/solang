@@ -13,20 +13,24 @@ SoLang is the programming language of the future. Why so?
  
 ### Important notes
  - Without Stack Exchange API key you can download only 300 snippets every day. Snippets are downloaded every time you run your code. To compile more code get your key on on [Stack Apps](http://stackapps.com/apps/oauth/register)
+ - To fulfill DRY principle, you can't make a copy of a snippet - every time you execute a method on it, the original snippet is modified.
+ - If you wan't to use snippet in more than one place - create a function. The only snippets you can actually reuse are surrounding snippets (those are for fast creation of for example loops, functions)
 
-### TODO
- - upload to [Jitpack](https://jitpack.io/)
- - memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
- - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
- - Cleanup dependencies
- - Add option to start code block numbering from 1
- - Real time code output and interaction (for some reason `inheritIO` doesn't work)
- - Design Logo
- - Write tests
- - infix fun parametrize / parametrized with, sth like this
- - safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
- - forLoop returning snippet and not extending CodeBuilder but creating its own. It should be subclass of Snippet.
+### Release ready TODO
+ - [ ] upload to [Jitpack](https://jitpack.io/)
+ - [ ] memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
+ - [ ] Cleanup dependencies
+ - [ ] Add option to start code block numbering from 1
+ - [ ] Real time code output and interaction (for some reason `inheritIO` doesn't work)
+ - [ ] Design Logo
+ - [ ] Write tests
+ - [ ] infix fun parametrize / parametrized with, sth like this
+ - [ ] safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
+ - [ ] forLoop returning snippet and not extending CodeBuilder but creating its own. It should be subclass of Snippet.
  
+### Read
+ - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
+
 ### Future plans
  - answers buffering
  - allow self-referencing SoLang code on Stack Overflow
@@ -35,12 +39,7 @@ SoLang is the programming language of the future. Why so?
  - downloading code from other Stack Exchange pages
  - downloading code from GitHub
  - support for plugins (other code sources)
-
-
-To fulfill DRY principle, you can't make a copy of a snippet - every time you execute a method on it, the original snippet is modified.
-If you wan't to use snippet in more than one place - create a function. The only snippets you can actually reuse are surrounding snippets (those are for fast creation of for example loops, functions)
-
-
+ - add-ons for chrome and firefox
 
 ```kotlin
 createCode {
