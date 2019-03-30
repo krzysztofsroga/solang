@@ -16,7 +16,7 @@ sealed class Snippet {
     }
 
     infix fun takeLines(x: IntRange) = applyStringModifier {
-        lines().slice((x.first-1)..(x.last-1)).joinToString("\n")
+        lines().slice((x.first - 1)..(x.last - 1)).joinToString("\n")
     }
 
     infix fun change(x: Pair<String, String>): Snippet = applyStringModifier {
@@ -40,15 +40,22 @@ class SimpleSnippet(private val code: String) : Snippet() {
     }
 }
 
-class StackOverflowSnippet(private val answerNumber: Int, codeBlockNumber: Int, private val revisionNumber: Int? = null) : Snippet() {
-    private val codeBlockNumber = codeBlockNumber - SoLangConfiguration.codeBlockIndices.value
-
+class StackOverflowSnippet(
+    private val answerNumber: Int,
+    private val codeBlockNumber: Int,
+    private val revisionNumber: Int? = null
+) : Snippet() {
     override suspend fun getCode(): String {
-        val answerBody: String = if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber) else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber) //TODO throw NoSuchAnswerRevision exception
+        val answerBody: String =
+            if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber)
+            else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber)
+        //TODO throw NoSuchAnswerRevision exception
         val codeRegex = Regex(
             "<pre><code>((.|\\n)*?)</code></pre>",
             setOf(RegexOption.CANON_EQ)
         )
-        return codeRegex.findAll(answerBody).getElement(codeBlockNumber).destructured.component1() //Using take because finding later blocks is not necessary
+        return codeRegex.findAll(answerBody)
+            .getElement(codeBlockNumber - SoLangConfiguration.codeBlockIndices.value)
+            .destructured.component1()
     }
 }

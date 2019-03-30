@@ -15,7 +15,7 @@ internal class SoCompiler(private val code: String, private val command: String)
             .inheritIO()
             .start()
         proc.waitFor()
-    } catch(e: IOException) {
+    } catch (e: IOException) {
         e.printStackTrace()
     }
 }

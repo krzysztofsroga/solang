@@ -9,7 +9,7 @@ import kotlinx.serialization.json.Json
 
 object StackOverflowConnection {
 
-    private const val stackOverflowUrl = "https://api.stackexchange.com/2.2/posts"
+    private const val stackExchangeApiUrl = "https://api.stackexchange.com/2.2/posts"
 
     init {
         configureFuel()
@@ -20,7 +20,7 @@ object StackOverflowConnection {
 
     private fun configureFuel() {
         FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
-        FuelManager.instance.basePath = stackOverflowUrl
+        FuelManager.instance.basePath = stackExchangeApiUrl
     }
 
     internal val getAnswerBody = ::downloadAnswerBody.memSuspend()
@@ -30,8 +30,9 @@ object StackOverflowConnection {
     private suspend fun downloadAnswerBody(answerNumber: Int): String {
         val request = Fuel.get(answerNumber.toString(), parameters)
         val responseString = request.awaitString()
-        val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString) // TODO when no longer experimental change it to Json.nonstrict.parse<ResponseModel<AnswerModel>>(responseString)
+        val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
         return obj.items.first().body
+        // TODO when no longer experimental change it to Json.nonstrict.parse<ResponseModel<AnswerModel>>(responseString)
     }
 
     private suspend fun downloadAnswerAllRevisionBodies(answerNumber: Int): Map<Int, String> {
