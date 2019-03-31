@@ -15,12 +15,14 @@ So Lang? So what?
  - It's great for DRM - your code can't be run without internet access
 
 ### Example code
+
 ##### FizzBuzz
 ```kotlin
 fun main() = createCode {
     +StackOverflowSnippet(40427469, 7)
 }.buildWith("python2", "script.py")
 ```
+
 ##### FizzBuzz but up to 50 and completely skips not matching numbers
 ```kotlin
 fun main() = createCode {
@@ -28,6 +30,16 @@ fun main() = createCode {
 }.buildWith("python2", "script.py")
 ```
 
+##### Fetching specific answer revision
+```kotlin
+fun main() = createCode {
+    SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
+    +SimpleSnippet("First revision:")
+    +StackOverflowSnippet(4362605, 2, 1)
+    +SimpleSnippet("Second revision:")
+    +StackOverflowSnippet(4362605, 2, 2)
+}.buildWith("python2", "script.py")
+```
 
 ### Installation
 
@@ -75,7 +87,7 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
 ### Important notes
  - Without Stack Exchange API key you can download only 300 snippets every day. Snippets are downloaded every time you run your code. To compile more code get your key on on [Stack Apps](http://stackapps.com/apps/oauth/register)
  - To fulfill DRY principle, making copies of snippets is a little bit harder - every time you execute a method like `toLine`, `change`, the original snippet is modified. If you need the code in more than one place, please write a function.
- - Please, always use safe mode and verify the code if you fetch 'newest' answer version. It's because stack overflow answers can be changed. You don't want to see your computer executing `rm -rf ~/`.
+ - Please, if you don't fetch specific revision of the answer, always use safe mode and verify it. It's because stack overflow answers can be changed. You probably don't want to see your computer executing `rm -rf ~/`.
 
 ### Release ready TODOs
  - [x] Upload to [Jitpack](https://jitpack.io/)
