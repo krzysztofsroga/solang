@@ -3,7 +3,7 @@ import java.io.IOException
 
 internal class SoCompiler(private val code: SoCode, private val command: String) {
 
-    internal fun compile(targetFile: String) { //todo create also function which will return output as string
+    internal fun compile(targetFile: String) {
         val file = File(targetFile)
         file.writeText(code.code)
         runCommand(command)
