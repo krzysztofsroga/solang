@@ -51,11 +51,14 @@ class SnippetTest {
 
     @Test
     fun `StackOverflowSnippet should ask StackOverflowConnection object for answer body`() = runBlocking {
+        val exampleBody = "there is no <code>code</code> <pre><code>FIRST BLOCK</code></pre>there is no code<pre><code>SECOND BLOCK</code></pre>thereisnocode"
         mockkObject(StackOverflowConnection, recordPrivateCalls = true)
-        coEvery { StackOverflowConnection invoke "downloadAnswerBody" withArguments  listOf(40427469) } returns "there is no <code>code</code> <pre><code>THERE IS THE CODE</code></pre>there is no code"
+        coEvery { StackOverflowConnection invoke "downloadAnswerBody" withArguments  listOf(40427469) } returns exampleBody
 
-        val snippet = StackOverflowSnippet(40427469, 7)
-        assertEquals("THERE IS THE CODE", snippet.render())
+        val snippet1 = StackOverflowSnippet(40427469, 1)
+        val snippet2 = StackOverflowSnippet(40427469, 2)
+        assertEquals("FIRST BLOCK", snippet1.render())
+        assertEquals("SECOND BLOCK", snippet2.render())
 
         unmockkObject(StackOverflowConnection)
     }

@@ -58,5 +58,6 @@ internal fun <A, R> (suspend (A) -> R).memSuspend(): suspend (A) -> R {
     }
 }
 
-//more efficient than toList()[n] because it skips all further elements
-internal fun<T> Sequence<T>.getElement(n: Int): T = take(n+1).last()
+
+internal fun<T> Sequence<T>.getElement(n: Int): T = toList()[n]
+//internal fun<T> Sequence<T>.getElement(n: Int): T = take(n+1).last()//more efficient than toList()[n] because it skips all further elements
