@@ -89,6 +89,31 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - To fulfill DRY principle, making copies of snippets is a little bit harder - every time you execute a method like `toLine`, `change`, the original snippet is modified. If you need the code in more than one place, please write a function.
  - Please, if you don't fetch specific revision of the answer, always use safe mode and verify it. It's because stack overflow answers can be changed. You probably don't want to see your computer executing `rm -rf ~/`.
 
+### FAQ
+#### How to get StackExchange token / Downloading more than 300 snippets a day
+To get an access token, simply authorize SoLang application with your StackExchange account  
+[SoLang Stack Exchange App](https://stackoverflow.com/oauth/dialog?client_id=14756&scope&redirect_uri=https://stackexchange.com/oauth/login_success)  
+This way you'll get a token which will expire after one day. If you need non-expiring token, click [HERE](https://stackoverflow.com/oauth/dialog?client_id=14756&scope=no_expiry&redirect_uri=https://stackexchange.com/oauth/login_success)  
+Your access token will be given in url of a page you're being redirected to.  
+![Your token is here](res/doc_token.png)  
+Now you can use it in your application:
+```kotlin
+SoLangConfiguration.apiToken = "YOUR TOKEN"
+```
+The matching key is already embedded in the application. If `apiToken` string is set to anything but empty string, it will be used in requests.
+#### I wish it could (...)
+Just open an issue and we can talk about it.
+#### Can I use in production?
+Well, it's not recommended, but as long as you fetch specific answer revision, it should work fine.
+#### Why does it ask me if the code is okay before running it?
+All of the answers on StackOverflow can be changed. If you want to disable this check [Configuration](#configuration)
+#### How many snippets can I download?
+You can download 300 snippets a day without access token. You can download 10000 with it.  
+You may want to read: [StackApss: Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
+#### How complex code can I create with it?
+You tell me
+
+
 ### Release ready TODOs
  - [x] Upload to [Jitpack](https://jitpack.io/)
  - [x] Memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
@@ -108,9 +133,6 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - Analyze possibility of returning subclass of `Snippet` from SurroundingSnippet - not extending CodeBuilder, but creating its own
  - Infix fun parametrize / parametrizedWith
  - Full test coverage
- 
-### Read
- - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
 
 ### Future plans
  - Allow self-referencing SoLang code on Stack Overflow. Sharing recursive snippet could be funny.
