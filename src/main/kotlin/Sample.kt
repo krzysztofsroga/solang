@@ -1,4 +1,3 @@
-@ExperimentalSnippet
 fun main() = createCode {
     SoLangConfiguration.apiToken = "" //YOUR TOKEN GOES HERE
     SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT

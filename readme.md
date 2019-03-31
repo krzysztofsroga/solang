@@ -23,6 +23,13 @@ fun main() = createCode {
 }.buildWith("python3", "script.py")
 ```
 
+##### Another Hello World
+```
+fun main() = createCode {
+    +StackOverflowSnippet(answerNumber = 11502683, codeBlockNumber = 2)
+}.buildWith("cat", "hello.txt")
+```
+
 ##### FizzBuzz
 ```kotlin
 fun main() = createCode {
