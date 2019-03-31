@@ -31,6 +31,10 @@ fun main() = createCode {
 
 ### Installation
 
+To try SoLang you can just clone the repository and build with gradle. 
+
+If you want to use SoLang in your own project, add it as a library to your build scripts:
+
 `build.gradle`
 ```groovy
 repositories {
@@ -38,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.krzysztofsroga.solang:0.1'
+    implementation 'com.github.krzysztofsroga.solang:0.1.1-alpha'
 }
 ```
 
@@ -51,7 +55,7 @@ repositories {
 }
 
 dependencies {
-    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1")
+    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1.1-alpha")
 }
 ```
 
