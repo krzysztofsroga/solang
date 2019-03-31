@@ -38,6 +38,9 @@ dependencies {
     implementation("com.github.kittinunf.fuel:fuel:2.0.1")
     implementation("com.github.kittinunf.fuel:fuel-coroutines:2.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0")
+
+    testImplementation("io.mockk:mockk:1.9.+")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5+")
 }
 
 tasks.withType<KotlinCompile> {
