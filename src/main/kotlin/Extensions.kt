@@ -11,7 +11,7 @@ import kotlinx.coroutines.async
 annotation class ExperimentalSnippet
 
 
-fun String.buildWith(buildScript: String, targetFile: String) {
+fun SoCode.buildWith(buildScript: String, targetFile: String) {
     val command = "$buildScript $targetFile"
 
     when (soLangMode) {
@@ -21,7 +21,7 @@ fun String.buildWith(buildScript: String, targetFile: String) {
         }
         SAFE -> {
             println("Code will be saved in file: $targetFile")
-            if (promptOk("code") && command.promptOk("build command")) {
+            if (code.promptOk("code") && command.promptOk("build command")) {
                 SoCompiler(this, command).compile(targetFile)
             } else {
                 println("Build canceled.")

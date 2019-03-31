@@ -1,11 +1,11 @@
 import java.io.File
 import java.io.IOException
 
-internal class SoCompiler(private val code: String, private val command: String) {
+internal class SoCompiler(private val code: SoCode, private val command: String) {
 
     internal fun compile(targetFile: String) { //todo create also function which will return output as string
         val file = File(targetFile)
-        file.writeText(code)
+        file.writeText(code.code)
         runCommand(command)
     }
 
