@@ -19,14 +19,14 @@ So Lang? So what?
 ##### FizzBuzz
 ```kotlin
 fun main() = createCode {
-    +StackOverflowSnippet(40427469, 7)
+    +StackOverflowSnippet(answerNumber = 40427469, codeBlockNumber = 7)
 }.buildWith("python2", "script.py")
 ```
 
 ##### FizzBuzz but up to 50 and completely skips not matching numbers
 ```kotlin
 fun main() = createCode {
-    +StackOverflowSnippet(40427469, 7) toLine 7 change ("101" to "51")
+    +StackOverflowSnippet(answerNumber = 40427469, codeBlockNumber = 7) toLine 7 change ("101" to "51")
 }.buildWith("python2", "script.py")
 ```
 
@@ -35,9 +35,9 @@ fun main() = createCode {
 fun main() = createCode {
     SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
     +SimpleSnippet("First revision:")
-    +StackOverflowSnippet(4362605, 2, 1)
+    +StackOverflowSnippet(answerNumber = 4362605, codeBlockNumber = 2, revisionNumber = 1)
     +SimpleSnippet("Second revision:")
-    +StackOverflowSnippet(4362605, 2, 2)
+    +StackOverflowSnippet(answerNumber = 4362605, codeBlockNumber = 2, revisionNumber = 2)
 }.buildWith("python2", "script.py")
 ```
 
