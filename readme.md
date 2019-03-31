@@ -12,7 +12,6 @@ So Lang? So what?
  - You can fully control compilation process with all features of kotlin programming language
  - Parallel code fetching and compilation (so that it doesn't take ages)
  - Answer caching - if you fetch different fragments of code from the same answer - don't worry, the data will be cached. Stack Exchange API will be called only once.
- - It's great for DRM - your code can't be run without internet access
 
 ### Example code
 
@@ -24,7 +23,7 @@ fun main() = createCode {
 ```
 
 ##### Another Hello World
-```
+```kotlin
 fun main() = createCode {
     +StackOverflowSnippet(answerNumber = 11502683, codeBlockNumber = 2)
 }.buildWith("cat", "hello.txt")
