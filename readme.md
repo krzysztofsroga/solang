@@ -113,6 +113,56 @@ You may want to read: [StackApss: Is there a limit of api requests?](https://sta
 #### How complex code can I create with it?
 You tell me
 
+### Api Docs
+Documentation is still being created, hence it may be lacking something.
+#### Basic code structure
+```kotlin
+fun main() = createCode {
+    //Your snippets go here
+}.buildWith("command", "filename")
+```
+Function `createCode` takes a lambda with receiver `CodeBuilder`, returns `SoCode`
+```kotlin
+fun createCode(block: CodeBuilder.() -> Unit): SoCode
+```
+Method `buildWith` builds `SoCode` saves code to file and complies it using given command. Redirects program output to console.
+```kotlin
+fun SoCode.buildWith(buildScript: String, targetFile: String)
+```
+#### Creating snippets
+`SimpleSnippet` just stores your code in unchanged form
+```kotlin
+class SimpleSnippet(code: String) : Snippet()
+```
+`StackOverflowSnippet` downloads given answer(and caches it in case other snippets would base on the same one), then cuts selected block number from it. In case you specified revision, all revisions are downloaded and then the one selected is used.
+In case no revision is specified, the newest one is used.
+```kotlin
+class StackOverflowSnippet(
+    answerNumber: Int,
+    codeBlockNumber: Int,
+    revisionNumber: Int? = null
+) : Snippet()
+```
+#### Adding snippets to your code
+To add a snippet to code just mark it with `+` symbol. You can assign snippet to variable if you want
+```kotlin
+createCode {
+    +SimpleSnippet("Hello world!") //this snippet is just appended
+    val s = SimpleSnippet("Code in SoLang!")
+    +s
+    +s
+}
+```
+This will result in output:
+```
+Hello world!
+Code in SoLang!
+Code in SoLang!
+```
+#### Modifying snippets
+
+#### Experimental features
+This section will be published in near future
 
 ### Release ready TODOs
  - [x] Upload to [Jitpack](https://jitpack.io/)
