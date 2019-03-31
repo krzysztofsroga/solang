@@ -29,7 +29,7 @@ fun SoCode.buildWith(buildScript: String, targetFile: String) {
         }
         PRINT -> {
             println("Build command: $command")
-            println("Code:\n$this")
+            println("Code:\n$code")
         }
     }
 }

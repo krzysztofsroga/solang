@@ -16,6 +16,13 @@ So Lang? So what?
 
 ### Example code
 
+##### Hello World
+```kotlin
+fun main() = createCode {
+    +StackOverflowSnippet(answerNumber = 1077349)
+}.buildWith("python3", "script.py")
+```
+
 ##### FizzBuzz
 ```kotlin
 fun main() = createCode {
@@ -55,7 +62,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.krzysztofsroga.solang:0.1.2-alpha'
+    implementation 'com.github.krzysztofsroga.solang:0.1.3-alpha'
 }
 ```
 
@@ -67,7 +74,7 @@ repositories {
 }
 
 dependencies {
-    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1.2-alpha")
+    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1.3-alpha")
 }
 ```
 
