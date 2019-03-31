@@ -38,24 +38,24 @@ If you want to use SoLang in your own project, add it as a library to your build
 `build.gradle`
 ```groovy
 repositories {
-    maven{ url  "https://jitpack.io" }
+    maven{ url "https://jitpack.io" }
+    maven{ url "https://kotlin.bintray.com/kotlinx" }
 }
 
 dependencies {
-    implementation 'com.github.krzysztofsroga.solang:0.1.1-alpha'
+    implementation 'com.github.krzysztofsroga.solang:0.1.2-alpha'
 }
 ```
 
 `build.gradle.kts`
 ```kotlin 
 repositories {
-    maven(url = "https://jitpack.io") {
-        name = "jitpack"
-    }
+    maven(url = "https://jitpack.io") 
+    maven(url = "https://kotlin.bintray.com/kotlinx")
 }
 
 dependencies {
-    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1.1-alpha")
+    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1.2-alpha")
 }
 ```
 
@@ -78,7 +78,7 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - Please, always use safe mode and verify the code if you fetch 'newest' answer version. It's because stack overflow answers can be changed. You don't want to see your computer executing `rm -rf ~/`.
 
 ### Release ready TODOs
- - [ ] Upload to [Jitpack](https://jitpack.io/)
+ - [x] Upload to [Jitpack](https://jitpack.io/)
  - [x] Memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
  - [x] Cleanup dependencies
  - [x] Add option to start code block numbering from 1
@@ -88,7 +88,7 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - [x] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
  - [x] Allow usage of specific answer version
  - [x] Api key usage
- - [ ] Fix `toLine` after `fromLine` usage
+ - [x] ~~Fix `toLine` after `fromLine` usage~~ Let's say that's the intended behavior - if you cut `fromLine` first then line numeration for `toLine` changes. Hence `snippet fromLine 4 toLine 8` is the same thing as `snippet takeLines 4..12`
  - [x] Fix all visibility modifiers
 
 ### Less important TODOs

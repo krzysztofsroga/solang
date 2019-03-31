@@ -23,7 +23,7 @@ apply {
 }
 
 group = "com.krzysztofsroga"
-version = "0.1-alpha"
+version = "0.1.2-alpha"
 
 repositories {
     mavenCentral()
