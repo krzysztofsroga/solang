@@ -96,7 +96,7 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - [x] Add option to start code block numbering from 1
  - [ ] Real time code output and interaction (for some reason `inheritIO` does not work)
  - [x] Design Logo
- - [ ] Write tests
+ - [x] Start writing tests
  - [x] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
  - [x] Allow usage of specific answer version
  - [x] Api key usage
@@ -106,7 +106,8 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
 ### Less important TODOs
  - BuildScript class, build script fetching
  - Analyze possibility of returning subclass of `Snippet` from SurroundingSnippet - not extending CodeBuilder, but creating its own
- - infix fun parametrize / parametrizedWith
+ - Infix fun parametrize / parametrizedWith
+ - Full test coverage
  
 ### Read
  - [Is there a limit of api requests?](https://stackapps.com/questions/3055/is-there-a-limit-of-api-requests)
