@@ -160,6 +160,10 @@ Code in SoLang!
 Code in SoLang!
 ```
 #### Modifying snippets
+This section is being worked on... Stay tuned!  
+You can add modifiers to snippets. Modifiers are queued until code compilation and executed all at the same time.
+
+Take care! When you modify a snippet, there isn't created a copy!
 
 #### Experimental features
 This section will be published in near future
