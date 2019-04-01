@@ -9,7 +9,7 @@ object SoLangConfiguration {
     var apiToken: String = ""
 
     internal val stackConnectionParameters = listOf(
-        "site" to "stackoverflow",
+//        "site" to "stackoverflow",
         "filter" to "withbody"
     )
 

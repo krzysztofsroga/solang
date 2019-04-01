@@ -40,15 +40,16 @@ class SimpleSnippet(private val code: String) : Snippet() {
     }
 }
 
-class StackOverflowSnippet(
-    private val answerNumber: Int,
-    private val codeBlockNumber: Int = 1,
-    private val revisionNumber: Int? = null
-) : Snippet() {
+sealed class StackSnippet: Snippet() {
+    protected abstract val platform: String
+    protected abstract val codeBlockNumber: Int
+    protected abstract val revisionNumber: Int?
+    protected abstract val answerNumber: Int
+
     override suspend fun getCode(): String {
-        val answerBody: String =
-            if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber)
-            else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber)
+        val answerBody: String = revisionNumber?.let { revisionNumber ->
+            StackOverflowConnection.getAnswerAllRevisionBodies(platform, answerNumber).getValue(revisionNumber)
+        } ?: StackOverflowConnection.getAnswerBody(platform, answerNumber)
         //TODO throw NoSuchAnswerRevision exception
         val codeRegex = Regex(
             "<pre><code>((.|\\n)*?)</code></pre>",
@@ -59,3 +60,26 @@ class StackOverflowSnippet(
             .destructured.component1()
     }
 }
+
+class StackOverflowSnippet(
+    override val answerNumber: Int,
+    override val codeBlockNumber: Int = 1,
+    override val revisionNumber: Int? = null
+) : StackSnippet() {
+    override val platform: String = "stackoverflow"
+}
+
+class StackCodeGolfSnippet(
+    override val answerNumber: Int,
+    override val codeBlockNumber: Int = 1,
+    override val revisionNumber: Int? = null
+) : StackSnippet() {
+    override val platform: String = "codegolf"
+}
+
+class StackCustomSnippet(
+    override val platform: String,
+    override val answerNumber: Int,
+    override val codeBlockNumber: Int = 1,
+    override val revisionNumber: Int? = null
+) : StackSnippet()

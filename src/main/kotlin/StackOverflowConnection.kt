@@ -27,16 +27,16 @@ object StackOverflowConnection {
 
     internal val getAnswerAllRevisionBodies = ::downloadAnswerAllRevisionBodies.memSuspend()
 
-    private suspend fun downloadAnswerBody(answerNumber: Int): String {
-        val request = Fuel.get(answerNumber.toString(), parameters)
+    private suspend fun downloadAnswerBody(platform: String, answerNumber: Int): String {
+        val request = Fuel.get(answerNumber.toString(), parameters + ("site" to platform))
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
         return obj.items.first().body
         // TODO when no longer experimental change it to Json.nonstrict.parse<ResponseModel<AnswerModel>>(responseString)
     }
 
-    private suspend fun downloadAnswerAllRevisionBodies(answerNumber: Int): Map<Int, String> {
-        val request = Fuel.get("$answerNumber/revisions", parameters)
+    private suspend fun downloadAnswerAllRevisionBodies(platform: String, answerNumber: Int): Map<Int, String> {
+        val request = Fuel.get("$answerNumber/revisions", parameters + ("site" to platform))
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerRevisionModel.serializer()), responseString)
         return mapOf(*obj.items.map { it.revision_number to it.body }.toTypedArray())
