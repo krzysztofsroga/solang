@@ -1,5 +1,5 @@
-So Lang? So what?
----
+# So Lang? So what?
+
 <img src=Logo.png width=200 height=200/>
 
 ### SoLang is the programming language of the future.
@@ -13,7 +13,7 @@ So Lang? So what?
  - Parallel code fetching and compilation (so that it doesn't take ages)
  - Answer caching - if you fetch different fragments of code from the same answer - don't worry, the data will be cached. Stack Exchange API will be called only once.
 
-### Example code
+## Example code
 
 ##### Hello World
 ```kotlin
@@ -63,7 +63,7 @@ fun main() = createCode {
 }.buildWith("python2", "script.py")
 ```
 
-### Installation
+## Installation
 
 To try SoLang you can just clone the repository and build with gradle. 
 
@@ -93,7 +93,7 @@ dependencies {
 }
 ```
 
-### Configuration
+## Configuration
 You can configure some basic features of SoLang compiler
 ```kotlin
 // SAFE is default mode. You will be prompted if the code and build command are okay
@@ -111,7 +111,7 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
  - To fulfill DRY principle, making copies of snippets is a little bit harder - every time you execute a method like `toLine`, `change`, the original snippet is modified. If you need the code in more than one place, please write a function.
  - Please, if you don't fetch specific revision of the answer, always use safe mode and verify it. It's because stack overflow answers can be changed. You probably don't want to see your computer executing `rm -rf ~/`.
 
-### FAQ
+# FAQ
 #### How to get StackExchange token / Downloading more than 300 snippets a day
 To get an access token, simply authorize SoLang application with your StackExchange account  
 Just go to this link and log in to your stack account: [SoLang App](https://stackoverflow.com/oauth/dialog?client_id=14756&scope&redirect_uri=https://stackexchange.com/oauth/login_success)  
@@ -135,7 +135,7 @@ You may want to read: [StackApss: Is there a limit of api requests?](https://sta
 #### How complex code can I create with it?
 You tell me
 
-### Api Docs
+# Api Docs
 Documentation is still being created, hence it may be lacking something.
 #### Basic code structure
 ```kotlin
@@ -190,12 +190,13 @@ Take care! When you modify a snippet, there isn't created a copy!
 #### Experimental features
 This section will be published in near future
 
-### Release ready TODOs
+# Project Plans
+
+#### Alpha TODOs
  - [x] Upload to [Jitpack](https://jitpack.io/)
  - [x] Memoize downloaded snippets [MnemoniK](https://github.com/aballano/MnemoniK)
  - [x] Cleanup dependencies
  - [x] Add option to start code block numbering from 1
- - [ ] Real time code output and interaction (for some reason `inheritIO` does not work)
  - [x] Design Logo
  - [x] Start writing tests
  - [x] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
@@ -204,19 +205,31 @@ This section will be published in near future
  - [x] ~~Fix `toLine` after `fromLine` usage~~ Let's say that's the intended behavior - if you cut `fromLine` first then line numeration for `toLine` changes. Hence `snippet fromLine 4 toLine 8` is the same thing as `snippet takeLines 4..12`
  - [x] Fix all visibility modifiers
 
-### Less important TODOs
- - BuildScript class, build script fetching
- - Analyze possibility of returning subclass of `Snippet` from SurroundingSnippet - not extending CodeBuilder, but creating its own
- - Infix fun parametrize / parametrizedWith
- - Full test coverage
+#### Beta TODOs
+ - [ ] Web version with [Kotlin Playground](https://github.com/JetBrains/kotlin-playground)
+ - [ ] Compilation server
+ - [ ] Analyze possibility of returning subclass of `Snippet` from SurroundingSnippet - not extending CodeBuilder, but creating its own
+ - [ ] BuildScript class, build script fetching
+ - [ ] Implement StackSort as one of the examples
+ - [ ] Downloading code from other Stack Exchange pages.
+ - [ ] Infix fun parametrize / parametrizedWith
 
-### Future plans
- - Allow self-referencing SoLang code on Stack Overflow. Sharing recursive snippet could be funny.
- - Write plugins for most popular IDEs and editors - it should show you hints how do your snippets look like.
- - Support Microsoft Windows target.
- - Downloading code from other Stack Exchange pages.
- - Downloading code from GitHub.
- - Add support for plugins (other code sources).
- - Create add-ons for chrome and firefox.
+#### Stable Release TODOs
+ - [ ] Callbacks from executed code
+ - [ ] Real time code output and interaction (for some reason `inheritIO` does not work)
+ - [ ] Downloading code from GitHub.
+ - [ ] Full test coverage
+ - [ ] Create add-ons for chrome and firefox.
+
+#### Future plans
+ - [ ] Allow self-referencing SoLang code on Stack Overflow. Sharing recursive snippet could be funny.
+ - [ ] Write plugins for most popular IDEs and editors - it should show you hints how do your snippets look like.
+ - [ ] Add support for plugins (other code sources).
+ - [ ] Mixing programming languages in one project
+
+#### Project History
+ - 2019-03-28 - First commit
+ - 2019-03-31 - First working version
+ - 2019-04-01 - Making project public
 
 ##### Disclaimer: This is NOT official language created by Stack Overflow. 
