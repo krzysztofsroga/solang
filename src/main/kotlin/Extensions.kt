@@ -58,6 +58,18 @@ internal fun <A, R> (suspend (A) -> R).memSuspend(): suspend (A) -> R {
     }
 }
 
+internal fun <A, B, R> (suspend (A, B) -> R).memSuspend(): suspend (A, B) -> R {
+    val cache: MutableMap<Pair<A, B>, Deferred<R>> = HashMap() //No need for ConcurrentMap because of lock
+    val scope = CoroutineScope(Dispatchers.Default)
+    return { a: A, b: B ->
+        synchronized(scope) {
+            cache.getOrPut(a to b) {
+                scope.async { this@memSuspend(a, b) }
+            }
+        }.await()
+    }
+}
+
 
 internal fun<T> Sequence<T>.getElement(n: Int): T = toList()[n]
 //internal fun<T> Sequence<T>.getElement(n: Int): T = take(n+1).last()//more efficient than toList()[n] because it skips all further elements
