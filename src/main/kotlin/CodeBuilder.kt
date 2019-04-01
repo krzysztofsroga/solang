@@ -1,19 +1,12 @@
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
-
 class CodeBuilder {
 
     private val snippets = mutableListOf<Snippet>()
 
-    internal fun build(): SoCode = SoCode(runBlocking {
-        snippets.map {
-            async {
-                it.render()
-            }
-        }.map {
-            it.await()
-        }.joinToString("\n") //TODO open issue in kotlin - map can't be merged with joinToString
-    })
+    internal fun build(): SoCode = SoCode(
+        snippets.joinToString("\n") {
+            it.render()
+        } //TODO open issue in kotlin - map can't be merged with joinToString
+    )
 
     operator fun Snippet.unaryPlus(): Snippet {
         snippets += this
