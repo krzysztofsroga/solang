@@ -202,7 +202,7 @@ This section will be published in near future
  - [x] Safe mode which shows generated code before execution (well, answer can be edited... it isn't quite safe)
  - [x] Allow usage of specific answer version
  - [x] Api key usage
- - [x] ~~Fix `toLine` after `fromLine` usage~~ Let's say that's the intended behavior - if you cut `fromLine` first then line numeration for `toLine` changes. Hence `snippet fromLine 4 toLine 8` is the same thing as `snippet takeLines 4..12`
+ - [x] ~~Fix `toLine` after `fromLine` usage~~ Let's say that's the intended behavior - if you cut `fromLine` first then line numeration for `toLine` changes. Hence `snippet fromLine 4 toLine 8` is the same thing as `snippet takeLines 4..11`
  - [x] Fix all visibility modifiers
 
 #### Beta TODOs
@@ -210,7 +210,7 @@ This section will be published in near future
  - [ ] Compilation server
  - [ ] Analyze possibility of returning subclass of `Snippet` from SurroundingSnippet - not extending CodeBuilder, but creating its own
  - [ ] BuildScript class, build script fetching
- - [ ] Implement StackSort as one of the examples
+ - [ ] Implement [StackSort](https://gkoberger.github.io/stacksort/) as one of the examples
  - [ ] Downloading code from other Stack Exchange pages.
  - [ ] Infix fun parametrize / parametrizedWith
 
