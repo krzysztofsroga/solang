@@ -102,7 +102,7 @@ SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.SAFE
 // UNSAFE is dangerous. It executes the code without any prompt. 
 SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.UNSAFE
 
-// PRINT mode just shows you generated code and bulid command
+// PRINT mode just shows you generated code and build command
 SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
 ```
 
