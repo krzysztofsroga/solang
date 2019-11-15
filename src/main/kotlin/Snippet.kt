@@ -1,7 +1,6 @@
-import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.UnstableDefault
 
-sealed class Snippet {
+abstract class Snippet {//TODO sealed, not abstract
 
     private val modifiers = mutableListOf<String.() -> String>()
 
@@ -43,6 +42,17 @@ class SimpleSnippet(private val code: String) : Snippet() {
     }
 }
 
+class UnparsedAnswer(private val body: String) {
+    private val codeRegex = Regex(
+        "<pre><code>((.|\\n)*?)</code></pre>",
+        setOf(RegexOption.CANON_EQ)
+    )
+
+    fun getCodeBlock(codeBlockIndex: Int) = codeRegex.findAll(body)
+            .getElement(codeBlockIndex)
+            .destructured.component1()
+}
+
 @UnstableDefault
 class StackOverflowSnippet(
     private val answerNumber: Int,
@@ -51,37 +61,57 @@ class StackOverflowSnippet(
 ) : Snippet() {
     override suspend fun getCode(): String {
         val answerBody: String =
-            if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber)
+            if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber) //TODO these should already return unparsed answer
             else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber)
         //TODO throw NoSuchAnswerRevision exception
-        val codeRegex = Regex(
-            "<pre><code>((.|\\n)*?)</code></pre>",
-            setOf(RegexOption.CANON_EQ)
-        )
-        return codeRegex.findAll(answerBody)
-            .getElement(codeBlockNumber - SoLangConfiguration.codeBlockIndices.value)
-            .destructured.component1()
+        return UnparsedAnswer(answerBody).getCodeBlock(codeBlockNumber - SoLangConfiguration.codeBlockIndices.value)
+
     }
 }
 
+@UnstableDefault
 class SearchSnippet(
-    private val searchTags: Collection<String>
-) { //TODO expand Collection<String>
-    val count: Int
-        get() {
-            return 2
-        }
+    private val searchTags: Collection<String>,
+    private val numberOfAnswers: Int
+): Collection<Snippet> {
+
+    override val size: Int
+        get() = numberOfAnswers
 
     operator fun get(answerNumber: Int): Snippet {
-
-        return SimpleSnippet("some code")
+        assert(answerNumber < numberOfAnswers)
+        return object : Snippet() {
+            override suspend fun getCode(): String {
+                val answerBody = UnparsedAnswer(StackOverflowConnection.getAcceptedAnswers(searchTags, numberOfAnswers)[answerNumber].body)
+                return answerBody.getCodeBlock(0) //TODO allow getting non-first code block
+            }
+        }
     }
 
-    suspend fun toSnippetList() {
-
+    override fun contains(element: Snippet): Boolean {
+        return false
     }
-} //Not knowing the exact number of answers makes everything a lot harder
-// OR... maybe there's another way. Fetch say 100 answers, if it's not enough, fetch another 100
+
+    override fun containsAll(elements: Collection<Snippet>): Boolean {
+        return false
+    }
+
+    override fun isEmpty(): Boolean {
+        return numberOfAnswers == 0
+    }
+
+    override fun iterator(): Iterator<Snippet> {
+        return object : Iterator<Snippet> {
+            var position: Int = 0
+            override fun hasNext(): Boolean {
+                return position < numberOfAnswers
+            }
+            override fun next(): Snippet {
+                return this@SearchSnippet[position++]
+            }
+        }
+    }
+}
 // According to docs max pagesize is 100
 // TODO DON'T MAKE MORE THAN 30 REQUESTS PER SECOND! http://api.stackexchange.com/docs/throttle
 // TODO merge many answer requests into one
