@@ -12,7 +12,7 @@ object StackOverflowConnection {
 
     private const val stackExchangeApiUrl = "https://api.stackexchange.com/"
     private const val stackExchangeApiVersion = 2.2
-    private const val defaultNumberOfResults = 25
+    private const val pageSize = 100
 
     init {
         configureFuel()
@@ -32,7 +32,7 @@ object StackOverflowConnection {
 
     internal val getPostsTagged = ::downloadPostsTagged.memSuspend()
 
-    internal val getAnswers = ::downloadAnswers.memSuspend()
+    internal val getAcceptedAnswers = ::downloadAcceptedAnswers.memSuspend()
 
     private suspend fun downloadAnswerBody(answerNumber: Int): String {
         val request = Fuel.get("posts/$answerNumber", parameters)
@@ -49,12 +49,13 @@ object StackOverflowConnection {
         return mapOf(*obj.items.map { it.revision_number to it.body }.toTypedArray())
     }
 
-    private suspend fun downloadPostsTagged(tags: Collection<String> = listOf("javascript", "sorting")): List<SearchResult> {
+    private suspend fun downloadPostsTagged(tags: Collection<String> = listOf("javascript", "sorting"), page: Int = 1): List<SearchResult> {
+        println("Tags: $tags, downloading page $page...")
         val additionalParameters = listOf(
             "tagged" to tags.joinToString(";"),
-            "page" to 1,
+            "page" to page,
             "sort" to "activity",
-            "pagesize" to defaultNumberOfResults,
+            "pagesize" to pageSize,
             "order" to "desc"
         )
         val request = Fuel.get("questions", parameters + additionalParameters)
@@ -65,12 +66,17 @@ object StackOverflowConnection {
         //questions?sort=activity&tagged=sort;javascript&page=1&pagesize=100&order=desc&site=stackoverflow
     }
 
-    private suspend fun downloadAnswers(tags: Collection<String> = listOf("javascript", "sorting")): List<AnswerModel> {
+    private suspend fun downloadAcceptedAnswers(tags: Collection<String> = listOf("javascript", "sorting"), numberOfResults: Int = 10): List<AnswerModel> {
         val additionalParameters = listOf(
             "sort" to "activity"
         )
-        val answerIds = downloadPostsTagged(tags).mapNotNull { it.accepted_answer_id }.joinToString{";"}
-        val request = Fuel.get("answers", parameters + additionalParameters)
+//        val answerIds = downloadPostsTagged(tags).mapNotNull { it.accepted_answer_id }.joinToString{";"}
+        val answerIds = mutableListOf<Int>()
+        var page = 1
+        while(answerIds.size < numberOfResults) {//TODO every response has 'has_more' field which says if there's another page. Throw exception if there's too little accepted answers
+            answerIds += downloadPostsTagged(tags, page++).mapNotNull { it.accepted_answer_id }
+        }
+        val request = Fuel.get("answers/${answerIds.take(numberOfResults).joinToString(";")}", parameters + additionalParameters)
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
         return obj.items
