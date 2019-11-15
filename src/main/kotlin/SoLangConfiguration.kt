@@ -29,4 +29,15 @@ object SoLangConfiguration {
         SAFE,
         PRINT
     }
+
+    fun generateParameters(
+        site: String = "stackoverflow",
+        withBody: Boolean = true
+    ): List<Pair<String, String>> {
+        return listOf(
+            "site" to site,
+            "filter" to if (withBody) "withbody" else ""
+        )
+        // TODO authentication etc
+    }
 }

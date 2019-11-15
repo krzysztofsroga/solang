@@ -1,4 +1,13 @@
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.UnstableDefault
+
+@UnstableDefault
 fun main() = createCode {
+    runBlocking {
+        print(StackOverflowConnection.getPostsTagged(10))
+    }
+
     SoLangConfiguration.apiToken = "" //YOUR TOKEN GOES HERE
 
     +StackOverflowSnippet(answerNumber = 50165755) toLine 15 //declare randomdate

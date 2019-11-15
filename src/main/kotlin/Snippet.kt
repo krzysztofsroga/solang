@@ -1,3 +1,6 @@
+import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.UnstableDefault
+
 sealed class Snippet {
 
     private val modifiers = mutableListOf<String.() -> String>()
@@ -40,6 +43,7 @@ class SimpleSnippet(private val code: String) : Snippet() {
     }
 }
 
+@UnstableDefault
 class StackOverflowSnippet(
     private val answerNumber: Int,
     private val codeBlockNumber: Int = 1,
