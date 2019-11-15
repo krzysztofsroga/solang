@@ -12,6 +12,7 @@ object StackOverflowConnection {
 
     private const val stackExchangeApiUrl = "https://api.stackexchange.com/"
     private const val stackExchangeApiVersion = 2.2
+    private const val defaultNumberOfResults = 25
 
     init {
         configureFuel()
@@ -31,6 +32,8 @@ object StackOverflowConnection {
 
     internal val getPostsTagged = ::downloadPostsTagged.memSuspend()
 
+    internal val getAnswers = ::downloadAnswers.memSuspend()
+
     private suspend fun downloadAnswerBody(answerNumber: Int): String {
         val request = Fuel.get("posts/$answerNumber", parameters)
         val responseString = request.awaitString()
@@ -46,22 +49,35 @@ object StackOverflowConnection {
         return mapOf(*obj.items.map { it.revision_number to it.body }.toTypedArray())
     }
 
-    private suspend fun downloadPostsTagged(/*tags: Collection<String>, */numberOfResults: Int = 10): List<Int> {
+    private suspend fun downloadPostsTagged(tags: Collection<String> = listOf("javascript", "sorting")): List<SearchResult> {
         val additionalParameters = listOf(
-            "tagged" to arrayOf("javascript", "sorting").joinToString(";"),
+            "tagged" to tags.joinToString(";"),
             "page" to 1,
             "sort" to "activity",
-            "pagesize" to numberOfResults,
+            "pagesize" to defaultNumberOfResults,
             "order" to "desc"
         )
         val request = Fuel.get("questions", parameters + additionalParameters)
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(SearchResult.serializer()), responseString)
-        return obj.items.mapNotNull { it.accepted_answer_id }
+        return obj.items
+//        return obj.items.mapNotNull { it.accepted_answer_id }
         //questions?sort=activity&tagged=sort;javascript&page=1&pagesize=100&order=desc&site=stackoverflow
     }
 
-    private suspend fun getSearchResults(searchPhrase: String, numberOfResults: Int = 10) {
+    private suspend fun downloadAnswers(tags: Collection<String> = listOf("javascript", "sorting")): List<AnswerModel> {
+        val additionalParameters = listOf(
+            "sort" to "activity"
+        )
+        val answerIds = downloadPostsTagged(tags).mapNotNull { it.accepted_answer_id }.joinToString{";"}
+        val request = Fuel.get("answers", parameters + additionalParameters)
+        val responseString = request.awaitString()
+        val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
+        return obj.items
+
+    }
+
+    private suspend fun getSearchResults(searchPhrase: String, numberOfResults: Int = 25) {
 
     }
 
@@ -69,11 +85,16 @@ object StackOverflowConnection {
     private data class ResponseModel<T>(val items: List<T>)
 
     @Serializable
-    private data class AnswerModel(val body: String)
+    data class AnswerModel(val body: String) // TODO private
 
     @Serializable
     private data class AnswerRevisionModel(val body: String, val revision_number: Int)
 
     @Serializable
-    data class SearchResult(val question_id: Int, val title: String, val is_answered: Boolean, val tags: Collection<String>, val accepted_answer_id: Int? = null) //TODO private
+    data class SearchResult(
+        val accepted_answer_id: Int? = null,
+        val tags: Collection<String>,
+        val title: String,
+        val question_id: Int
+    ) //TODO private
 }

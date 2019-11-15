@@ -63,3 +63,25 @@ class StackOverflowSnippet(
             .destructured.component1()
     }
 }
+
+class SearchSnippet(
+    private val searchTags: Collection<String>
+) { //TODO expand Collection<String>
+    val count: Int
+        get() {
+            return 2
+        }
+
+    operator fun get(answerNumber: Int): Snippet {
+
+        return SimpleSnippet("some code")
+    }
+
+    suspend fun toSnippetList() {
+
+    }
+} //Not knowing the exact number of answers makes everything a lot harder
+// OR... maybe there's another way. Fetch say 100 answers, if it's not enough, fetch another 100
+// According to docs max pagesize is 100
+// TODO DON'T MAKE MORE THAN 30 REQUESTS PER SECOND! http://api.stackexchange.com/docs/throttle
+// TODO merge many answer requests into one

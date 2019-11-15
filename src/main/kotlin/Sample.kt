@@ -5,9 +5,9 @@ import kotlinx.serialization.UnstableDefault
 @UnstableDefault
 fun main() = createCode {
     runBlocking {
-        print(StackOverflowConnection.getPostsTagged(10))
+        StackOverflowConnection.getAnswers(listOf("sorting", "python")).forEach { println(it) }
     }
-
+    SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
     SoLangConfiguration.apiToken = "" //YOUR TOKEN GOES HERE
 
     +StackOverflowSnippet(answerNumber = 50165755) toLine 15 //declare randomdate
