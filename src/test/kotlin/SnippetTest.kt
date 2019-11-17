@@ -1,5 +1,6 @@
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.UnstableDefault
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -49,6 +50,7 @@ class SnippetTest {
         assertEquals("second\nthird", snippet2.render())
     }
 
+    @UnstableDefault
     @Test
     fun `StackOverflowSnippet should ask StackOverflowConnection object for answer body`() = runBlocking {
         val exampleBody = "there is no <code>code</code> <pre><code>FIRST BLOCK</code></pre>there is no code<pre><code>SECOND BLOCK</code></pre>thereisnocode"

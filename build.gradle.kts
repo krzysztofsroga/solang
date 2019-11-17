@@ -38,6 +38,7 @@ dependencies {
     implementation("com.github.kittinunf.fuel:fuel:2.0.1")
     implementation("com.github.kittinunf.fuel:fuel-coroutines:2.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0")
+    implementation("org.jsoup:jsoup:1.12.1")
 
     testImplementation("io.mockk:mockk:1.9.+")
     testImplementation("org.junit.jupiter:junit-jupiter:5.5+")
@@ -45,4 +46,8 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

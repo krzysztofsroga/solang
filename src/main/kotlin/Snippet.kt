@@ -49,20 +49,24 @@ class StackOverflowSnippet(
     private val revisionNumber: Int? = null
 ) : Snippet() {
     override suspend fun getCode(): String {
-        val answerBody: UnparsedAnswer =
+        val answerBody: UnparsedPost =
             if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber) //TODO these should already return unparsed answer
             else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber)
         //TODO throw NoSuchAnswerRevision exception
         return answerBody.getCodeBlocks()[codeBlockNumber - SoLangConfiguration.codeBlockIndices.value]
-
     }
+//    override suspend fun getCode() =
+//        (if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber)
+//        else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber))
+//            .getCodeBlocks()[codeBlockNumber - SoLangConfiguration.codeBlockIndices.value]
+
 }
 
 @UnstableDefault
 class SearchSnippet(
     private val searchTags: Collection<String>,
     private val numberOfAnswers: Int
-): Collection<Snippet> {
+) : Collection<Snippet> {
 
     override val size: Int
         get() = numberOfAnswers
@@ -72,7 +76,7 @@ class SearchSnippet(
         return object : Snippet() {
             override suspend fun getCode(): String {
                 val answerBody = StackOverflowConnection.getAcceptedAnswers(searchTags, numberOfAnswers)[answerNumber]
-                return answerBody.getCodeBlocks().first() //TODO allow getting non-first code block
+                return answerBody.getCodeBlocks().firstOrNull() ?: "" //TODO allow getting non-first code block
             }
         }
     }
@@ -95,6 +99,7 @@ class SearchSnippet(
             override fun hasNext(): Boolean {
                 return position < numberOfAnswers
             }
+
             override fun next(): Snippet {
                 return this@SearchSnippet[position++]
             }

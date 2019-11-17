@@ -34,19 +34,19 @@ object StackOverflowConnection {
 
     internal val getAcceptedAnswers = ::downloadAcceptedAnswers.memSuspend() //TODO memoization shouldn't take into account the second parameter - use greater one somehow (if possible)
 
-    private suspend fun downloadAnswerBody(answerNumber: Int): UnparsedAnswer {
+    private suspend fun downloadAnswerBody(answerNumber: Int): UnparsedPost {
         val request = Fuel.get("posts/$answerNumber", parameters)
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
-        return UnparsedAnswer(obj.items.first().body)
+        return UnparsedPost(obj.items.first().body)
         // TODO when no longer experimental change it to Json.nonstrict.parse<ResponseModel<AnswerModel>>(responseString)
     }
 
-    private suspend fun downloadAnswerAllRevisionBodies(answerNumber: Int): Map<Int, UnparsedAnswer> {
+    private suspend fun downloadAnswerAllRevisionBodies(answerNumber: Int): Map<Int, UnparsedPost> {
         val request = Fuel.get("posts/$answerNumber/revisions", parameters)
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerRevisionModel.serializer()), responseString)
-        return mapOf(*obj.items.map { it.revision_number to UnparsedAnswer(it.body) }.toTypedArray())
+        return mapOf(*obj.items.map { it.revision_number to UnparsedPost(it.body) }.toTypedArray())
     }
 
     private suspend fun downloadPostsTagged(tags: Collection<String> = listOf("javascript", "sorting"), page: Int = 1): List<SearchResult> {
@@ -66,7 +66,7 @@ object StackOverflowConnection {
         //questions?sort=activity&tagged=sort;javascript&page=1&pagesize=100&order=desc&site=stackoverflow
     }
 
-    private suspend fun downloadAcceptedAnswers(tags: Collection<String> = listOf("javascript", "sorting"), numberOfResults: Int = 10): List<UnparsedAnswer> {
+    private suspend fun downloadAcceptedAnswers(tags: Collection<String> = listOf("javascript", "sorting"), numberOfResults: Int = 10): List<UnparsedPost> {
         val additionalParameters = listOf(
             "sort" to "activity"
         )
@@ -79,7 +79,7 @@ object StackOverflowConnection {
         val request = Fuel.get("answers/${answerIds.take(numberOfResults).joinToString(";")}", parameters + additionalParameters)
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
-        return obj.items.map { UnparsedAnswer(it.body) }
+        return obj.items.map { UnparsedPost(it.body) }
 
     }
 
