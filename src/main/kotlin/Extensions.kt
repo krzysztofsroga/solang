@@ -5,7 +5,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
-@Experimental
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
 annotation class ExperimentalSnippet
@@ -57,6 +56,7 @@ internal fun <A, R> (suspend (A) -> R).memSuspend(): suspend (A) -> R {
         }.await()
     }
 }
+
 internal fun <A, B, R> (suspend (A, B) -> R).memSuspend(): suspend (A, B) -> R {
     val cache: MutableMap<Pair<A, B>, Deferred<R>> = HashMap() //No need for ConcurrentMap because of lock
     val scope = CoroutineScope(Dispatchers.Default)
@@ -70,18 +70,18 @@ internal fun <A, B, R> (suspend (A, B) -> R).memSuspend(): suspend (A, B) -> R {
     }
 }
 
-internal fun <A, B, R> (suspend (A, B) -> R).memSuspend(): suspend (A, B) -> R {
-    val cache: MutableMap<Pair<A, B>, Deferred<R>> = HashMap() //No need for ConcurrentMap because of lock
+internal fun <A, B, C, R> (suspend (A, B, C) -> R).memSuspend(): suspend (A, B, C) -> R {
+    val cache: MutableMap<Triple<A, B, C>, Deferred<R>> = HashMap() //No need for ConcurrentMap because of lock
     val scope = CoroutineScope(Dispatchers.Default)
-    return { a: A, b: B ->
+    return { a: A, b: B, c: C ->
         synchronized(scope) {
-            cache.getOrPut(a to b) {
-                scope.async { this@memSuspend(a, b) }
+            //so that it isn't called once again until previous async is started
+            cache.getOrPut(Triple(a, b, c)) {
+                scope.async { this@memSuspend(a, b, c) }
             }
         }.await()
     }
 }
 
-
-internal fun<T> Sequence<T>.getElement(n: Int): T = toList()[n]
+internal fun <T> Sequence<T>.getElement(n: Int): T = toList()[n]
 //internal fun<T> Sequence<T>.getElement(n: Int): T = take(n+1).last()//more efficient than toList()[n] because it skips all further elements

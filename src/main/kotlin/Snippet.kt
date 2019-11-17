@@ -42,28 +42,11 @@ class SimpleSnippet(private val code: String) : Snippet() {
     }
 }
 
-@UnstableDefault
-class StackOverflowSnippet(
-    private val answerNumber: Int,
-    private val codeBlockNumber: Int = 1,
-    private val revisionNumber: Int? = null
-) : Snippet() {
-    override suspend fun getCode(): String {
-        val answerBody: UnparsedPost =
-            if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber) //TODO these should already return unparsed answer
-            else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber)
-        //TODO throw NoSuchAnswerRevision exception
-        return answerBody.getCodeBlocks()[codeBlockNumber - SoLangConfiguration.codeBlockIndices.value]
-    }
-//    override suspend fun getCode() =
-//        (if (revisionNumber == null) StackOverflowConnection.getAnswerBody(answerNumber)
-//        else StackOverflowConnection.getAnswerAllRevisionBodies(answerNumber).getValue(revisionNumber))
-//            .getCodeBlocks()[codeBlockNumber - SoLangConfiguration.codeBlockIndices.value]
 
-}
 
 @UnstableDefault
 class SearchSnippet(
+    private val platform: StackPlatform,
     private val searchTags: Collection<String>,
     private val numberOfAnswers: Int
 ) : Collection<Snippet> {
@@ -75,7 +58,7 @@ class SearchSnippet(
         assert(answerNumber < numberOfAnswers)
         return object : Snippet() {
             override suspend fun getCode(): String {
-                val answerBody = StackOverflowConnection.getAcceptedAnswers(searchTags, numberOfAnswers)[answerNumber]
+                val answerBody = StackOverflowConnection.getAcceptedAnswers(platform, searchTags, numberOfAnswers)[answerNumber]
                 return answerBody.getCodeBlocks().firstOrNull() ?: "" //TODO allow getting non-first code block
             }
         }
