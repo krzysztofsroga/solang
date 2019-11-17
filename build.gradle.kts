@@ -23,7 +23,7 @@ apply {
 }
 
 group = "com.krzysztofsroga"
-version = "0.1.3-alpha"
+version = "0.1.4-alpha"
 
 repositories {
     mavenCentral()
@@ -35,13 +35,13 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation("com.github.kittinunf.fuel:fuel:2.0.1")
-    implementation("com.github.kittinunf.fuel:fuel-coroutines:2.0.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0")
-    implementation("org.jsoup:jsoup:1.12.1")
+    implementation("com.github.kittinunf.fuel:fuel:2.2.+")
+    implementation("com.github.kittinunf.fuel:fuel-coroutines:2.2.+")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.+")
+    implementation("org.jsoup:jsoup:1.12.+")
 
     testImplementation("io.mockk:mockk:1.9.+")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.5+")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.+")
 }
 
 tasks.withType<KotlinCompile> {
