@@ -15,7 +15,7 @@ fun main() = createCode {
 
 
 @UnstableDefault
-fun CodeBuilder.stackSort() = runBlocking{
+fun CodeBuilder.stackSort() = runBlocking {
     val fetchedAnswers = SearchSnippet(StackPlatform.StackOverflowPlatform, listOf("sorting", "python"), 10)
     fetchedAnswers.forEachIndexed { i, fetchedAnswer ->
         +SimpleSnippet("\n\n\n\nDownloaded Snipped number $i:\n")

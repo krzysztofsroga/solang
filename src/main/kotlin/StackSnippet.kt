@@ -1,7 +1,7 @@
 import kotlinx.serialization.UnstableDefault
 
 @UnstableDefault
-sealed class StackSnippet: Snippet() {
+sealed class StackSnippet : Snippet() {
     protected abstract val platform: StackPlatform
     protected abstract val codeBlockNumber: Int
     protected abstract val revisionNumber: Int?

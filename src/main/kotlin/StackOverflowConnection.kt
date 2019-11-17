@@ -4,7 +4,8 @@ import SoLangConfiguration.stackConnectionParameters
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.coroutines.awaitString
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 
 @UnstableDefault
@@ -42,14 +43,21 @@ object StackOverflowConnection {
         // TODO when no longer experimental change it to Json.nonstrict.parse<ResponseModel<AnswerModel>>(responseString)
     }
 
-    private suspend fun downloadAnswerAllRevisionBodies(platform: StackPlatform, answerNumber: Int): Map<Int, UnparsedPost> {
+    private suspend fun downloadAnswerAllRevisionBodies(
+        platform: StackPlatform,
+        answerNumber: Int
+    ): Map<Int, UnparsedPost> {
         val request = Fuel.get("posts/$answerNumber/revisions", parameters + platform.parameters)
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerRevisionModel.serializer()), responseString)
         return mapOf(*obj.items.map { it.revision_number to UnparsedPost(it.body) }.toTypedArray())
     }
 
-    private suspend fun downloadPostsTagged(platform: StackPlatform, tags: Collection<String> = listOf("javascript", "sorting"), page: Int = 1): List<SearchResult> {
+    private suspend fun downloadPostsTagged(
+        platform: StackPlatform,
+        tags: Collection<String> = listOf("javascript", "sorting"),
+        page: Int = 1
+    ): List<SearchResult> {
         println("Tags: $tags, downloading page $page...")
         val additionalParameters = listOf(
             "tagged" to tags.joinToString(";"),
@@ -66,17 +74,24 @@ object StackOverflowConnection {
         //questions?sort=activity&tagged=sort;javascript&page=1&pagesize=100&order=desc&site=stackoverflow
     }
 
-    private suspend fun downloadAcceptedAnswers(platform: StackPlatform, tags: Collection<String> = listOf("javascript", "sorting"), numberOfResults: Int = 10): List<UnparsedPost> {
+    private suspend fun downloadAcceptedAnswers(
+        platform: StackPlatform,
+        tags: Collection<String> = listOf("javascript", "sorting"),
+        numberOfResults: Int = 10
+    ): List<UnparsedPost> {
         val additionalParameters = listOf(
             "sort" to "activity"
         )
 //        val answerIds = downloadPostsTagged(tags).mapNotNull { it.accepted_answer_id }.joinToString{";"}
         val answerIds = mutableListOf<Int>()
         var page = 1
-        while(answerIds.size < numberOfResults) {//TODO every response has 'has_more' field which says if there's another page. Throw exception if there's too little accepted answers
+        while (answerIds.size < numberOfResults) {//TODO every response has 'has_more' field which says if there's another page. Throw exception if there's too little accepted answers
             answerIds += downloadPostsTagged(platform, tags, page++).mapNotNull { it.accepted_answer_id }
         }
-        val request = Fuel.get("answers/${answerIds.take(numberOfResults).joinToString(";")}", parameters + platform.parameters + additionalParameters)
+        val request = Fuel.get(
+            "answers/${answerIds.take(numberOfResults).joinToString(";")}",
+            parameters + platform.parameters + additionalParameters
+        )
         val responseString = request.awaitString()
         val obj = Json.nonstrict.parse(ResponseModel.serializer(AnswerModel.serializer()), responseString)
         return obj.items.map { UnparsedPost(it.body) }
