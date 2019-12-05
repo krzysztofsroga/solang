@@ -207,12 +207,14 @@ This section will be published in near future
 
 #### Beta TODOs
  - [ ] Web version with [Kotlin Playground](https://github.com/JetBrains/kotlin-playground)
- - [ ] Compilation server
+ - [ ] Compilation server with [Kotlin Web Demo](https://github.com/JetBrains/kotlin-web-demo)
  - [ ] Analyze possibility of returning subclass of `Snippet` from SurroundingSnippet - not extending CodeBuilder, but creating its own
  - [ ] BuildScript class, build script fetching
  - [ ] Implement [StackSort](https://gkoberger.github.io/stacksort/) as one of the examples
- - [ ] Downloading code from other Stack Exchange pages.
+ - [x] Downloading code from other Stack Exchange pages.
  - [ ] Infix fun parametrize / parametrizedWith
+ - [x] Searching for answers and iterating over accepted ones
+ - [ ] Caching data between runs
 
 #### Stable Release TODOs
  - [ ] Callbacks from executed code
