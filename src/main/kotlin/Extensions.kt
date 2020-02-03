@@ -1,20 +1,17 @@
-import SoLangConfiguration.SoLangMode.*
-import SoLangConfiguration.soLangMode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import java.io.File
 
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
 annotation class ExperimentalSnippet
 
 
-fun SoCode.buildWith(buildScript: String, targetFile: String) {
+fun SoCode.buildWith(buildScript: String, targetFile: String, outputMode: OutputMode = OutputMode.INHERIT): String {
     val compiler = SoCompiler("$buildScript $targetFile")
     compiler.save(targetFile, this)
-    compiler.build()
+    return compiler.build(outputMode)
 }
 
 fun SoCode.justSave(targetFile: String) = SoCompiler("").save(targetFile, this) //TODO use compiler of the project when project class is created

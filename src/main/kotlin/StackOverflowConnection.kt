@@ -62,7 +62,7 @@ object StackOverflowConnection {
         val additionalParameters = listOf(
             "tagged" to tags.joinToString(";"),
             "page" to page,
-            "sort" to "activity",
+            "sort" to "votes",
             "pagesize" to pageSize,
             "order" to "desc"
         )
