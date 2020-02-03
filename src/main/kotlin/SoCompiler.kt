@@ -19,18 +19,17 @@ internal class SoCompiler(internal val command: String) {
         "File: " + it.name + "\nContent:\n" + it.readText()
     }
 
+    companion object {
+        val createdFiles: MutableList<File> = mutableListOf() //TODO when only one compiler instance is used per project, move these fields to class, CREATE PROJECT CLASS
 
-    private fun runCommand(command: String) = try {
-        val parts = command.split("\\s".toRegex())
-        val proc = ProcessBuilder(*parts.toTypedArray())
-            .inheritIO()
-            .start()
-        proc.waitFor()
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-
-    companion object { //TODO when only one compiler instance is used per project, move these fields to class, CREATE PROJECT CLASS
-        val createdFiles: MutableList<File> = mutableListOf()
+        internal fun runCommand(command: String) = try {
+            val parts = command.split("\\s".toRegex())
+            val proc = ProcessBuilder(*parts.toTypedArray())
+                .inheritIO()
+                .start()
+            proc.waitFor()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 }
