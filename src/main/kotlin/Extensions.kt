@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import java.io.File
 
 @Retention(AnnotationRetention.BINARY)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
@@ -11,27 +12,31 @@ annotation class ExperimentalSnippet
 
 
 fun SoCode.buildWith(buildScript: String, targetFile: String) {
-    val command = "$buildScript $targetFile"
+    val compiler = SoCompiler("$buildScript $targetFile")
+    compiler.save(targetFile, this)
+    val files = compiler.filesToString()
 
     when (soLangMode) {
         UNSAFE -> {
-            println("Code will be saved in file: $targetFile")
-            SoCompiler(this, command).compile(targetFile)
+            println("Code is be saved in file: $targetFile")
+            compiler.compile()
         }
         SAFE -> {
-            println("Code will be saved in file: $targetFile")
-            if (code.promptOk("code") && command.promptOk("build command")) {
-                SoCompiler(this, command).compile(targetFile)
+            println("Code is be saved in file: $targetFile")
+            if (files.promptOk("code") && compiler.command.promptOk("build command")) {
+                compiler.compile()
             } else {
                 println("Build canceled.")
             }
         }
         PRINT -> {
-            println("Build command: $command")
-            println("Code:\n$code")
+            println("Build command: ${compiler.command}")
+            println("Code:\n$files")
         }
     }
 }
+
+fun SoCode.justSave(targetFile: String) = SoCompiler("").save(targetFile, this) //TODO use compiler of the project when project class is created
 
 internal fun String.promptOk(what: String): Boolean {
     println("This is $what:")

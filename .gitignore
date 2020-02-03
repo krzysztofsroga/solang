@@ -1,4 +1,5 @@
-script.py
+*.py
+__pycache__/
 *.iml
 .gradle
 /local.properties

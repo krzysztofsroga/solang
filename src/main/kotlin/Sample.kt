@@ -2,16 +2,19 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.UnstableDefault
 
 @UnstableDefault
-fun main() = createCode {
-    SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.PRINT
+fun main() {
+    SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.SAFE
     SoLangConfiguration.apiToken = "" //YOUR TOKEN GOES HERE
 
-    stackSort()
+    createCode {
+        +StackOverflowSnippet(answerNumber = 24846766, codeBlockNumber = 1)
+    }.justSave("Fibonacci.py")
 
-//    +StackOverflowSnippet(answerNumber = 50165755) toLine 15 //declare randomdate
-//    +StackOverflowSnippet(answerNumber = 48980683, codeBlockNumber = 2) toLine 1 change ("random.random" to "randomTime") change ("x" to "my_list")  //generate list
-//    +StackOverflowSnippet(answerNumber = 902736, codeBlockNumber = 6) fromLine 3 change ("&gt;" to ">")//declare bubble and print sorted lits
-}.buildWith("python2", "script.py")
+    createCode {
+        +SimpleSnippet("from Fibonacci import *")
+        +StackOverflowSnippet(answerNumber = 24846766, codeBlockNumber = 2)
+    }.buildWith("python", "Main.py")
+}
 
 
 @UnstableDefault
