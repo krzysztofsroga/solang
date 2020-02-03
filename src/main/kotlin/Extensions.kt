@@ -14,26 +14,7 @@ annotation class ExperimentalSnippet
 fun SoCode.buildWith(buildScript: String, targetFile: String) {
     val compiler = SoCompiler("$buildScript $targetFile")
     compiler.save(targetFile, this)
-    val files = compiler.filesToString()
-
-    when (soLangMode) {
-        UNSAFE -> {
-            println("Code is be saved in file: $targetFile")
-            compiler.compile()
-        }
-        SAFE -> {
-            println("Code is be saved in file: $targetFile")
-            if (files.promptOk("code") && compiler.command.promptOk("build command")) {
-                compiler.compile()
-            } else {
-                println("Build canceled.")
-            }
-        }
-        PRINT -> {
-            println("Build command: ${compiler.command}")
-            println("Code:\n$files")
-        }
-    }
+    compiler.build()
 }
 
 fun SoCode.justSave(targetFile: String) = SoCompiler("").save(targetFile, this) //TODO use compiler of the project when project class is created

@@ -4,16 +4,20 @@ import kotlinx.serialization.UnstableDefault
 @UnstableDefault
 fun main() {
     SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.SAFE
-    SoLangConfiguration.apiToken = "" //YOUR TOKEN GOES HERE
-
     createCode {
-        +StackOverflowSnippet(answerNumber = 24846766, codeBlockNumber = 1)
-    }.justSave("Fibonacci.py")
-
+        +StackOverflowSnippet(answerNumber = 4349617, codeBlockNumber = 1)
+    }.justSave("main.c")
     createCode {
-        +SimpleSnippet("from Fibonacci import *")
-        +StackOverflowSnippet(answerNumber = 24846766, codeBlockNumber = 2)
-    }.buildWith("python", "Main.py")
+        +StackOverflowSnippet(answerNumber = 4349617, codeBlockNumber = 2)
+    }.justSave("foo.h")
+    createCode {
+        +StackOverflowSnippet(answerNumber = 4349617, codeBlockNumber = 3)
+    }.justSave("foo.c")
+    createCode {
+        +StackOverflowSnippet(answerNumber = 4349617, codeBlockNumber = 4) change ("    " to "\t")
+    }.justSave("makefile")
+    SimpleBuildCommand("make").bulid()
+    SimpleBuildCommand("./myprogram").bulid()
 }
 
 

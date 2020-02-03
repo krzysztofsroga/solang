@@ -1,3 +1,4 @@
+import SoLangConfiguration.soLangMode
 import java.io.File
 import java.io.IOException
 
@@ -15,8 +16,28 @@ internal class SoCompiler(internal val command: String) {
         file.writeText(code.code)
     }
 
-    internal fun filesToString(): String = createdFiles.joinToString("\n\n\n") {
+    private fun filesToString(): String = createdFiles.joinToString("\n\n\n") {
         "File: " + it.name + "\nContent:\n" + it.readText()
+    }
+
+    internal fun build() {
+        val files = filesToString()
+        when (soLangMode) {
+            SoLangConfiguration.SoLangMode.UNSAFE -> {
+                compile()
+            }
+            SoLangConfiguration.SoLangMode.SAFE -> {
+                if (files.promptOk("code") && command.promptOk("build command")) {
+                    compile()
+                } else {
+                    println("Build canceled.")
+                }
+            }
+            SoLangConfiguration.SoLangMode.PRINT -> {
+                println("Build command: ${command}")
+                println("Code:\n$files")
+            }
+        }
     }
 
     companion object {
