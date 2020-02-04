@@ -41,8 +41,8 @@ data class SnippetWithOutput(val code: SoCode, val output: String)
 @UnstableDefault
 fun searchSnippet() {
     val testName = "SomeSuperUniqueName"
-    val fetchedAnswers = SearchSnippet(StackPlatform.StackOverflowPlatform, listOf("command", "python"), 10)
     File(testName).createNewFile()
+    val fetchedAnswers = SearchSnippet(StackPlatform.StackOverflowPlatform, listOf("command", "python"), 10)
     val snippetsWithOutput = fetchedAnswers.mapIndexed { i, fetchedAnswer ->
         val code = createCode { +fetchedAnswer }
         val output = code.buildWith("python", "answer$i.py", outputMode = OutputMode.CATCH)
