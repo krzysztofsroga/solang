@@ -6,7 +6,7 @@ It is based on an assumption that every program can be written using only code f
 The language allows developer to write extremely concise code by referencing snippets available online.
 
 ### So what is SoLang and why should I use it?
- - It's built around Stack Overflow Driven Development process and brings it to the next level.
+ - It's built around [Stack Overflow Driven Development](https://dzone.com/articles/stack-overflow-driven-development-sodd-its-really) process and brings it to the next level.
  - You don't ever need to write code which has been already written - just reference it!
  - Your code is always up to date - when someone update their answer on Stack Overflow, your code is automatically updated as well!
  - The code is usually more concise. Want to set-up a server with simple one-liner? That's the language for you!
