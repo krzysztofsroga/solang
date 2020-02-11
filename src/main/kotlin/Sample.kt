@@ -6,6 +6,9 @@ import java.io.File
 fun main() {
     searchSnippet()
 }
+//fun main()=cc{+Cgs(180218)}.bw("python")
+//fun main()=createCode{+StackCodeGolfSnippet(180218)}.buildWith("python","a")
+
 
 @UnstableDefault
 fun multiFileC() {

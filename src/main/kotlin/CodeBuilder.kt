@@ -7,9 +7,7 @@ class CodeBuilder {
 
     internal fun build(): SoCode = SoCode(runBlocking {
         snippets.map {
-            async {
-                it.render()
-            }
+            async { it.render() }
         }.map {
             it.await()
         }.joinToString("\n") //TODO open issue in kotlin - map can't be merged with joinToString

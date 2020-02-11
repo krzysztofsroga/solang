@@ -1,4 +1,5 @@
 import SoLangConfiguration.soLangMode
+import SoLangConfiguration.SoLangMode.*
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -25,17 +26,17 @@ internal class SoCompiler(internal val command: String) {
     internal fun build(outputMode: OutputMode): String {
         val files = filesToString()
         when (soLangMode) {
-            SoLangConfiguration.SoLangMode.UNSAFE -> {
+            UNSAFE -> {
                 return compile(outputMode)
             }
-            SoLangConfiguration.SoLangMode.SAFE -> {
+            SAFE -> {
                 if (files.promptOk("code") && command.promptOk("build command")) {
                     return compile(outputMode)
                 } else {
                     println("Build canceled.")
                 }
             }
-            SoLangConfiguration.SoLangMode.PRINT -> {
+            PRINT -> {
                 println("Build command: $command")
                 println("Code:\n$files")
             }
