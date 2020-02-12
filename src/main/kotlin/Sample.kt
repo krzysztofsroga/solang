@@ -4,8 +4,15 @@ import java.io.File
 
 @UnstableDefault
 fun main() {
-    searchSnippet()
+    println(createCode {
+        +StackCustomSnippet(StackPlatform.BlenderPlatform, 128374)
+    }.code)
+//    searchSnippet()
+
 }
+//fun main()=cc{+Cgs(180218)}.bw("python")
+//fun main()=createCode{+StackCodeGolfSnippet(180218)}.buildWith("python","a")
+
 
 @UnstableDefault
 fun multiFileC() {

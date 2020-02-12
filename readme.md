@@ -1,7 +1,7 @@
 # So Lang? So what?
 
 <img src=Logo.png width=200 height=200/>
-SoLang is an open source programming language built on Kotlin DSL platform.
+SoLang is an esoteric, example-centric programming language built on Kotlin DSL platform.
 It is based on an assumption that every program can be written using only code fetched from StackOverflow answers.
 The language allows developer to write extremely concise code by referencing snippets available online.
 
@@ -80,7 +80,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.krzysztofsroga.solang:0.1.3-alpha'
+    implementation 'com.github.krzysztofsroga.solang:0.1.4-alpha'
 }
 ```
 
@@ -92,7 +92,7 @@ repositories {
 }
 
 dependencies {
-    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1.3-alpha")
+    implementation(group = "com.github.krzysztofsroga", name = "solang", version = "0.1.4-alpha")
 }
 ```
 
