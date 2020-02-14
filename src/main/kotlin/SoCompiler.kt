@@ -25,12 +25,14 @@ internal class SoCompiler(internal val command: String) {
 
     internal fun build(outputMode: OutputMode): String {
         val files = filesToString()
+        val filesEmpty = files.isEmpty()
+        createdFiles.clear()
         when (soLangMode) {
             UNSAFE -> {
                 return compile(outputMode)
             }
             SAFE -> {
-                if (files.promptOk("code") && command.promptOk("build command")) {
+                if ((filesEmpty || files.promptOk("code")) && command.promptOk("build command")) {
                     return compile(outputMode)
                 } else {
                     println("Build canceled.")

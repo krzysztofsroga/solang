@@ -4,9 +4,8 @@ import java.io.File
 
 @UnstableDefault
 fun main() {
-    println(createCode {
-        +StackCustomSnippet(StackPlatform.BlenderPlatform, 128374)
-    }.code)
+
+    multiFileC()
 //    searchSnippet()
 
 }
@@ -16,6 +15,7 @@ fun main() {
 
 @UnstableDefault
 fun multiFileC() {
+    // https://stackoverflow.com/a/4349617
     SoLangConfiguration.soLangMode = SoLangConfiguration.SoLangMode.SAFE
     createCode {
         +StackOverflowSnippet(answerNumber = 4349617, codeBlockNumber = 1)
@@ -59,4 +59,11 @@ fun searchSnippet() {
         println("Desired output is produced by code:")
         println(it.code.code)
     }
+}
+
+@UnstableDefault
+fun blenderPlatform() {
+    println(createCode {
+        +StackCustomSnippet(StackPlatform.BlenderPlatform, 128374)
+    }.code)
 }
